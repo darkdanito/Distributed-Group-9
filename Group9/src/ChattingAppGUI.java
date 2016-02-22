@@ -19,6 +19,7 @@ public class ChattingAppGUI extends JFrame {
 			public void run() {
 				try {
 					ChattingAppGUI frame = new ChattingAppGUI();
+					frame.setTitle("Group 9 - Chatting Application");
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
