@@ -1,23 +1,26 @@
+package GUI;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.Style;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
+import Controller.CommandController;
 import Model.*;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -28,6 +31,8 @@ import java.awt.event.KeyEvent;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
+import javax.swing.Timer;
+import javax.swing.UIManager;
 import javax.swing.JTextPane;
 
 public class ChattingAppGUI extends JFrame {
@@ -47,56 +52,64 @@ public class ChattingAppGUI extends JFrame {
 	private JPanel groupsSubPanel2;
 	
 	// JTabbedPane variables for the UI
-	private JTabbedPane tabbedPane;
-	private JTabbedPane groupTabbedPane;
+	public JTabbedPane tabbedPane;
+	public JTabbedPane groupTabbedPane;
 	
 	// JTextFields
-	private JTextField userNameJT;
-	private JTextField friendNameJT;
-	private JTextField groupNameJT;
+	public JTextField userNameJT;
+	public JTextField friendNameJT;
+	public JTextField groupNameJT;
+	public JTextField joinedGroupNameJT;
+	public JTextField chattingWithJT;
+	public JTextField grpMsgJT;
+	public JTextField pmMsgJT;
 	
 	// JButtons
-	private JButton registerBtn;
-	private JButton statusBtn;
-	private JButton addFriendBtn;
-	private JButton deleteFriendBtn;
-	private JButton pmFriendBtn;
-	private JButton groupCreateBtn;
-	private JButton grpJoinBtn;
+	public JButton registerBtn;
+	public JButton statusBtn;
+	public JButton addFriendBtn;
+	public JButton pmFriendBtn;
+	public JButton groupCreateBtn;
+	public JButton grpJoinBtn;
+	public JButton leaveGroupBtn;
+	public JButton pmSendBtn;
+	public JButton pmQuitBtn;
+	public JButton grpSendMsgBtn;
+	public JButton inviteFriendBtn;
 	
 	// JLists
-	private JList<Person> friendListBox;
-	private JList<Person> grpFriendListBox;
-	private JList<Group> groupListBox;
+	public JList<Person> friendListBox;
+	public JList<Person> grpFriendListBox;
+	public JList<Group> groupListBox;
 	
 	// Other JUnit
-	private JTextPane chatMsgTextPane;
+	public JTextPane chatMsgTextPane;
+	public JTextPane pmTextPane;
+	public JScrollPane pmJSP;
+	public JScrollPane chatMsgJSP;
+	public JScrollPane friendListBoxMsgJSP;
+	public JScrollPane grpFriendListBoxMsgJSP;
+	public JScrollPane grpListBoxMsgJSP;
 	private JLabel lblUsername;
 	private JLabel grpListJL;
 	private JLabel groupNameJL;
 	private JLabel lblFriend;
 	private JLabel grpFriendListJL;
-	private JSeparator separator;
-	private JSeparator separator_1;
 	private JLabel groupListJL;
 	private JLabel friendListJL;
+	private JLabel grpMsgJL;
+	private JLabel pmChatWithJL;
+	private JLabel pmMsgLabel;
+	private JSeparator separator;
+	private JSeparator separator_1;
+	private JSeparator separator_2;
+	private JSeparator separator_3;
 	
 	// Others variables
 	private UserAccount userAccount = new UserAccount("UNREGISTERED UserAccount OBJECT");
-	private JTextField joinedGroupNameJT;
-	private JButton leaveGroupBtn;
-	private JSeparator separator_2;
-	private JLabel grpMsgJL;
-	private JTextField grpMsgJT;
-	private JButton grpSendMsgBtn;
-	private JLabel pmChatWithJL;
-	private JTextField chattingWithJT;
-	private JTextPane pmTextPane;
-	private JLabel pmMsgLabel;
-	private JTextField pmMsgJT;
-	private JButton pmSendBtn;
-	private JSeparator separator_3;
-	private JButton pmQuitBtn;
+	private CommandController commandCtrl;
+	public boolean userNameExist = false;
+	public boolean groupExist = false;
 	
 	/**
 	 * Launch the application private JSeparator separator_1;
@@ -123,6 +136,18 @@ public class ChattingAppGUI extends JFrame {
 	 */
 	public ChattingAppGUI() {
 		JFrame frame = this;
+		frame.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		    	commandCtrl.leaveGroup();
+				commandCtrl.leavePrivateChat();
+				commandCtrl.sendRequest(commandCtrl.commandList[8], commandCtrl.getUserAccount().getName(), "all");
+		        System.exit(0);
+		    }
+		});
+		UIManager.put("OptionPane.messageFont", new Font("Tahoma", Font.PLAIN, 18));
+		UIManager.put("OptionPane.buttonFont", new Font("Tahoma", Font.PLAIN, 18));
+		commandCtrl = new CommandController(this);
 		
 		setTitle("ICT2107 ChatApp");
 		setResizable(false);
@@ -151,25 +176,29 @@ public class ChattingAppGUI extends JFrame {
 		registerBtn = new JButton("Register");
 		registerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String[] exist = {"Winnie" ,"Khaleef"}; // TO BE DELETED
-				String username = userNameJT.getText().toString();
-				for(int i = 0; i< exist.length; i++)
-				{
-					if(exist[i].toLowerCase().equals(username.toLowerCase()))
-					{
-						JOptionPane.showMessageDialog(frame,
-							    "Username \"" + username + "\" is already in use.",
-							    "Registration failed",
-							    JOptionPane.ERROR_MESSAGE);
-						return;
-					}
-				}
-				userAccount = new UserAccount(username);
-				tabbedPane.setEnabledAt(1, true);
-				tabbedPane.setEnabledAt(2, true);
+				userNameExist = false;
 				userNameJT.setEnabled(false);
-				statusBtn.setVisible(true);
-				registerBtn.setVisible(false);
+				registerBtn.setEnabled(false);
+				String userName = userNameJT.getText().toString();
+				commandCtrl.sendRequest(commandCtrl.commandList[0], userName, "all");
+				
+				Timer timer = new Timer(1000, new ActionListener() {
+					  @Override
+					  public void actionPerformed(ActionEvent arg0) {
+					    // Code to be executed
+						  if(!userNameExist)
+						  {
+							  commandCtrl.registerUser(userName);
+							  tabbedPane.setEnabledAt(1, true);
+							  tabbedPane.setEnabledAt(2, true);
+							  userNameJT.setEnabled(false);
+							  statusBtn.setVisible(true);
+							  registerBtn.setVisible(false);
+						  }
+					  }
+					});
+				timer.setRepeats(false); // Only execute once
+				timer.start(); // Go go go!
 			}
 		});
 		registerBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -182,19 +211,23 @@ public class ChattingAppGUI extends JFrame {
 		statusBtn.setVisible(false);
 		statusBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				userAccount.setStatus(userAccount.getStatus() ^ true);
-				
-				if(userAccount.getStatus())
+				commandCtrl.getUserAccount().setStatus(commandCtrl.getUserAccount().getStatus() ^ true);
+				if(commandCtrl.getUserAccount().getStatus())
 				{
 					statusBtn.setText("Offline");
 					tabbedPane.setEnabledAt(1, true);
 					tabbedPane.setEnabledAt(2, true);
+					commandCtrl.sendRequest(commandCtrl.commandList[1], commandCtrl.responseList[2], "all");
 				}
 				else
 				{
 					statusBtn.setText("Online");
 					tabbedPane.setEnabledAt(1, false);
 					tabbedPane.setEnabledAt(2, false);
+					commandCtrl.leaveGroup();
+					commandCtrl.leavePrivateChat();
+					commandCtrl.sendRequest(commandCtrl.commandList[1], commandCtrl.responseList[1], "all");
+					tabbedPane.setSelectedIndex(0);
 				}
 			}
 		});
@@ -211,64 +244,42 @@ public class ChattingAppGUI extends JFrame {
 		
 		friendsPanel.setLayout(null);
 		friendListBox = new JList<Person>(userAccount.getFriendList());
+		friendListBoxMsgJSP = new JScrollPane(friendListBox);
+		friendListBox.setCellRenderer(new DisabledItemListCellRenderer());
 		friendListBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		friendListBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		friendListBox.setBounds(15, 56, 180, 249);
-		friendsPanel.add(friendListBox);
+		friendListBoxMsgJSP.setBounds(15, 56, 180, 249);
+		friendsPanel.add(friendListBoxMsgJSP);
 		
 		addFriendBtn = new JButton("Add");
 		addFriendBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String friendName = friendNameJT.getText().toString();
-				String[] notexist = {"YunYong" ,"jamie"}; // TO BE DELETED
-				for(int i = 0; i< notexist.length; i++)
+				if(friendName.equals(commandCtrl.getUserAccount().getName()))
 				{
-					if(notexist[i].toLowerCase().equals(friendName.toLowerCase()))
-					{
-						JOptionPane.showMessageDialog(frame,
-							    "Friend \"" + friendName + "\" does not exists",
-							    "Adding friend failed",
-							    JOptionPane.ERROR_MESSAGE);
-						return;
-					}
+					JOptionPane.showMessageDialog(frame,
+						    "You cannot add yourself as friend!",
+						    "Adding friend failed",
+						    JOptionPane.ERROR_MESSAGE);
+					return;
 				}
-				userAccount.addFriend(friendNameJT.getText().toString());
+				JOptionPane.showMessageDialog(frame,
+					    "Your friend request sent.",
+					    "Friend Request",
+					    JOptionPane.INFORMATION_MESSAGE);
+				commandCtrl.sendRequest(commandCtrl.commandList[2], "NIL", friendName);
 				friendNameJT.setText(null);
-				friendListBox.setListData(userAccount.getFriendList());
-				grpFriendListBox.setListData(userAccount.getFriendList());
 			}
 		});
 		addFriendBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		addFriendBtn.setBounds(210, 56, 246, 29);
+		addFriendBtn.setBounds(211, 96, 246, 29);
 		friendsPanel.add(addFriendBtn);
 		
 		friendNameJT = new JTextField();
 		friendNameJT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		friendNameJT.setBounds(277, 16, 179, 29);
+		friendNameJT.setBounds(278, 56, 179, 29);
 		friendsPanel.add(friendNameJT);
 		friendNameJT.setColumns(10);
-		
-		deleteFriendBtn = new JButton("Delete");
-		deleteFriendBtn.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				int selection = friendListBox.getSelectedIndex();
-				if( selection >= 0 )
-				{
-					
-					// Add this item to the list and refresh
-					userAccount.removeFriend(selection);
-					friendListBox.setListData( userAccount.getFriendList() );
-
-					// As a nice touch, select the next item
-					if( selection >= userAccount.getFriendList().size() )
-						selection = userAccount.getFriendList().size() - 1;
-					friendListBox.setSelectedIndex( selection );
-				}
-			}
-		});
-		deleteFriendBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		deleteFriendBtn.setBounds(210, 277, 246, 29);
-		friendsPanel.add(deleteFriendBtn);
 		
 		pmFriendBtn = new JButton("Private Message");
 		pmFriendBtn.addActionListener(new ActionListener() {
@@ -276,34 +287,22 @@ public class ChattingAppGUI extends JFrame {
 				int selection = friendListBox.getSelectedIndex();
 				if( selection >= 0 )
 				{
-					String friend = userAccount.getFriendList().get(selection).getName();
-					tabbedPane.setSelectedIndex(3);
-					tabbedPane.setEnabledAt(3, true);
-					pmFriendBtn.setEnabled(false);
-					joinedGroupNameJT.setText(friend);
-					
-					pmTextPane.setText("");
-					chattingWithJT.setText(friend);
-					StyledDocument doc = pmTextPane.getStyledDocument();
-			        Style style = pmTextPane.addStyle("I'm a Style", null);
-			        StyleConstants.setForeground(style, Color.orange);
-
-			        try { doc.insertString(doc.getLength(), "Private message to " + friend + "\n",style); }
-			        catch (BadLocationException ex){}
+					String friend = commandCtrl.getUserAccount().getFriendList().get(selection).getName();
+					commandCtrl.createPrivateChat(friend);
 				}
 			}
 		});
 		pmFriendBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		pmFriendBtn.setBounds(210, 101, 246, 29);
+		pmFriendBtn.setBounds(211, 141, 246, 29);
 		friendsPanel.add(pmFriendBtn);
 		
 		lblFriend = new JLabel("Friend");
 		lblFriend.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblFriend.setBounds(210, 16, 69, 29);
+		lblFriend.setBounds(211, 56, 69, 29);
 		friendsPanel.add(lblFriend);
 		
 		separator = new JSeparator();
-		separator.setBounds(210, 90, 246, 2);
+		separator.setBounds(211, 133, 246, 2);
 		friendsPanel.add(separator);
 		
 		// End of friend panel
@@ -321,9 +320,12 @@ public class ChattingAppGUI extends JFrame {
 		
 		grpFriendListBox = new JList<Person>(userAccount.getFriendList());
 		grpFriendListBox.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		grpFriendListBoxMsgJSP = new JScrollPane(grpFriendListBox);
+		grpFriendListBox.setCellRenderer(new DisabledItemListCellRenderer());
+		grpFriendListBox.addListSelectionListener(new ConditionableListSelectionListener());
 		grpFriendListBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		grpFriendListBox.setBounds(15, 45, 180, 350);
-		groupsSubPanel1.add(grpFriendListBox);
+		grpFriendListBoxMsgJSP.setBounds(15, 45, 180, 350);
+		groupsSubPanel1.add(grpFriendListBoxMsgJSP);
 		
 		grpFriendListJL = new JLabel("Friend List :");
 		grpFriendListJL.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -342,49 +344,48 @@ public class ChattingAppGUI extends JFrame {
 		groupNameJT.setColumns(10);
 		
 		groupListBox = new JList<Group>(userAccount.getGroupList());
+		grpListBoxMsgJSP = new JScrollPane(groupListBox);
 		groupListBox.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		groupListBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		groupListBox.setBounds(210, 143, 342, 201);
-		groupsSubPanel1.add(groupListBox);
+		grpListBoxMsgJSP.setBounds(210, 143, 342, 201);
+		groupsSubPanel1.add(grpListBoxMsgJSP);
 		
 		groupCreateBtn = new JButton("Create");
 		groupCreateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				String[] groupexist = {"ICT2902" ,"ICT2108"}; // TO BE DELETED
+				groupCreateBtn.setEnabled(false);
+				groupNameJT.setEnabled(false);
+				
 				String groupName = groupNameJT.getText().toString();
-				Vector<Group> groupList = userAccount.getGroupList();
-				for(int i = 0; i<groupList.size(); i++)
+				groupExist = false;
+				Vector<String> selectedFriend = new Vector<String>();
+				
+				int[] selectedIndices = grpFriendListBox.getSelectedIndices();
+				
+				if(selectedIndices.length <= 0)
 				{
-					if(groupList.get(i).getName().equals(groupName))
+					Object[] options = {"Create", "Cancel"};
+					int n = JOptionPane.showOptionDialog(
+							frame,
+							"You did not invite any friends.\nContinue creating group?",
+							"Group Invitation",
+							JOptionPane.YES_NO_OPTION,
+							JOptionPane.INFORMATION_MESSAGE,
+							null,     //do not use a custom Icon
+							options,  //the titles of buttons
+							options[0]); //default button title
+					if(n == JOptionPane.NO_OPTION)
 					{
-						JOptionPane.showMessageDialog(frame,
-							    "Group \"" + groupName + "\" already exists.",
-							    "Creating group failed",
-							    JOptionPane.ERROR_MESSAGE);
+						groupCreateBtn.setEnabled(true);
+						groupNameJT.setEnabled(true);
 						return;
 					}
 				}
-				for(int i = 0; i<groupexist.length; i++)
+				for(int i = 0; i< selectedIndices.length; i++)
 				{
-					if(groupexist[i].equals(groupName))
-					{
-						JOptionPane.showMessageDialog(frame,
-							    "Group \"" + groupName + "\" already exists.",
-							    "Creating group failed",
-							    JOptionPane.ERROR_MESSAGE);
-						return;
-					}
+					selectedFriend.add(commandCtrl.getUserAccount().getFriendList().get(i).getName());
 				}
-				if(groupName.contains(" "))
-				{
-					JOptionPane.showMessageDialog(frame,
-						    "Group name cannot contain space.",
-						    "Creating group failed",
-						    JOptionPane.ERROR_MESSAGE);
-				}
-				userAccount.addGroup(groupName, "235.1.2.3", userAccount.getName());
-				groupNameJT.setText(null);
-				groupListBox.setListData(userAccount.getGroupList());
+				commandCtrl.createGroupChat(groupName, selectedFriend.toArray(new String[selectedFriend.size()]));
 			}
 		});
 		groupCreateBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -411,19 +412,8 @@ public class ChattingAppGUI extends JFrame {
 				int selection = groupListBox.getSelectedIndex();
 				if( selection >= 0 )
 				{
-					String joinedGroup = userAccount.getGroupList().get(selection).getName();
-					groupTabbedPane.setSelectedIndex(1);
-					groupTabbedPane.setEnabledAt(0, false);
-					groupTabbedPane.setEnabledAt(1, true);
-					joinedGroupNameJT.setText(joinedGroup);
-					
-					chatMsgTextPane.setText("");
-					StyledDocument doc = chatMsgTextPane.getStyledDocument();
-			        Style style = chatMsgTextPane.addStyle("I'm a Style", null);
-			        StyleConstants.setForeground(style, Color.blue);
-
-			        try { doc.insertString(doc.getLength(), "Welcome to " + joinedGroup + "\n",style); }
-			        catch (BadLocationException ex){}
+					grpJoinBtn.setEnabled(false);
+					commandCtrl.joinGroup(selection);
 				}
 			}
 		});
@@ -447,15 +437,11 @@ public class ChattingAppGUI extends JFrame {
 		leaveGroupBtn = new JButton("Leave");
 		leaveGroupBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				groupTabbedPane.setSelectedIndex(0);
-				groupTabbedPane.setEnabledAt(0, true);
-				groupTabbedPane.setEnabledAt(1, false);
-				joinedGroupNameJT.setText("");
-				chatMsgTextPane.setText("");
+				commandCtrl.leaveGroup();
 			}
 		});
 		leaveGroupBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		leaveGroupBtn.setBounds(233, 16, 146, 29);
+		leaveGroupBtn.setBounds(238, 16, 146, 29);
 		groupsSubPanel2.add(leaveGroupBtn);
 		
 		separator_2 = new JSeparator();
@@ -463,10 +449,11 @@ public class ChattingAppGUI extends JFrame {
 		groupsSubPanel2.add(separator_2);
 		
 		chatMsgTextPane = new JTextPane();
-		chatMsgTextPane.setBounds(15, 54, 537, 301);
+		chatMsgJSP = new JScrollPane(chatMsgTextPane);
+		chatMsgJSP.setBounds(15, 54, 537, 301);
 		chatMsgTextPane.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		chatMsgTextPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		groupsSubPanel2.add(chatMsgTextPane);
+		groupsSubPanel2.add(chatMsgJSP);
 		
 		grpMsgJL = new JLabel("Message");
 		grpMsgJL.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -490,16 +477,7 @@ public class ChattingAppGUI extends JFrame {
 		grpSendMsgBtn = new JButton("Send");
 		grpSendMsgBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String msg = "You : " + grpMsgJT.getText().toString() + "\n";
-				StyledDocument doc = chatMsgTextPane.getStyledDocument();
-		        Style style = chatMsgTextPane.addStyle("I'm a Style", null);
-		        StyleConstants.setForeground(style, Color.black);
-		        StyleConstants.setBold(style, true);
-		        StyleConstants.setItalic(style, true);
-
-		        try { doc.insertString(doc.getLength(), msg ,style); }
-		        catch (BadLocationException ex){}
-		        grpMsgJT.setText("");
+				commandCtrl.sendGrpChatMessage(grpMsgJT.getText().toString());
 			}
 		});
 		grpSendMsgBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -509,6 +487,18 @@ public class ChattingAppGUI extends JFrame {
 		// End of SubPanel 2
 		groupTabbedPane.add("Management", groupsSubPanel1);
 		groupTabbedPane.add("Chat", groupsSubPanel2);
+		
+		inviteFriendBtn = new JButton("Invite Friends");
+		inviteFriendBtn.addActionListener(new ActionListener() {
+			@SuppressWarnings("deprecation")
+			public void actionPerformed(ActionEvent e) {
+				CustomDialog a= new CustomDialog(frame, commandCtrl, grpFriendListBox, joinedGroupNameJT.getText().toString());
+				a.show();
+			}
+		});
+		inviteFriendBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		inviteFriendBtn.setBounds(388, 16, 164, 29);
+		groupsSubPanel2.add(inviteFriendBtn);
 		groupTabbedPane.setEnabledAt(1, false);
 		
 		// End of group panel
@@ -530,10 +520,13 @@ public class ChattingAppGUI extends JFrame {
 		chattingWithJT.setColumns(10);
 		
 		pmTextPane = new JTextPane();
+		pmJSP = new JScrollPane(pmTextPane);
+		pmJSP.setViewportView(pmTextPane);
 		pmTextPane.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		pmTextPane.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-		pmTextPane.setBounds(15, 71, 537, 310);
-		privateMsgPanel.add(pmTextPane);
+		pmJSP.setBounds(15, 71, 537, 310);
+		
+		privateMsgPanel.add(pmJSP);
 		
 		pmMsgLabel = new JLabel("Message");
 		pmMsgLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -557,16 +550,7 @@ public class ChattingAppGUI extends JFrame {
 		pmSendBtn = new JButton("Send");
 		pmSendBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String msg = "You : " + pmMsgJT.getText().toString() + "\n";
-				StyledDocument doc = pmTextPane.getStyledDocument();
-		        Style style = pmTextPane.addStyle("I'm a Style", null);
-		        StyleConstants.setForeground(style, Color.black);
-		        StyleConstants.setBold(style, true);
-		        StyleConstants.setItalic(style, true);
-
-		        try { doc.insertString(doc.getLength(), msg ,style); }
-		        catch (BadLocationException ex){}
-		        pmMsgJT.setText("");
+				commandCtrl.sendPMMessage(pmMsgJT.getText().toString());
 			}
 		});
 		pmSendBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -580,12 +564,7 @@ public class ChattingAppGUI extends JFrame {
 		pmQuitBtn = new JButton("Quit");
 		pmQuitBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				chattingWithJT.setText(null);
-				pmMsgJT.setText(null);
-				pmTextPane.setText(null);
-				tabbedPane.setSelectedIndex(1);
-				tabbedPane.setEnabledAt(3, false);
-				pmFriendBtn.setEnabled(true);
+				commandCtrl.leavePrivateChat();
 			}
 		});
 		pmQuitBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -598,13 +577,6 @@ public class ChattingAppGUI extends JFrame {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setFont( new Font( "Tahoma", Font.BOLD, 18 ) );
 		contentPane.add(tabbedPane);
-//		tabbedPane.setBounds(0, 0, 330, 160);
-//		setBounds(100, 100, 336, 200);
-//    	tabbedPane.setBounds(0, 0, 474, 360);
-//    	setBounds(100, 100, 480, 400);
-    	tabbedPane.setBounds(0, 0, 576, 470);
-    	groupTabbedPane.setBounds(0, 0, 572, 430);
-    	setBounds(100, 100, 580, 510);		
     	
 		tabbedPane.addChangeListener(new ChangeListener() {
 			@Override
@@ -616,26 +588,26 @@ public class ChattingAppGUI extends JFrame {
                     {
 	                    case 0:
 	                    	// width - 4, height - 40
-	                		tabbedPane.setBounds(0, 0, 330, 160);
-	                		setBounds(100, 100, 336, 200);
+	                		tabbedPane.setSize(330, 160);
+	                		setSize(336, 200);
 	                    	break;
 	                    case 1:
-	                    	tabbedPane.setBounds(0, 0, 474, 360);
-	                    	setBounds(100, 100, 480, 400);
+	                    	tabbedPane.setSize(474, 360);
+	                    	setSize(480, 400);
 	                    	break;
 	                    case 2:
-	                    	tabbedPane.setBounds(0, 0, 576, 470);
-	                    	groupTabbedPane.setBounds(0, 0, 572, 430);
-	                    	setBounds(100, 100, 580, 510);			
+	                    	tabbedPane.setSize(576, 470);
+	                    	groupTabbedPane.setSize(572, 430);
+	                    	setSize(580, 510);			
 	                    	break;
 	                    case 3:
-	                    	tabbedPane.setBounds(0, 0, 576, 470);
-	                    	groupTabbedPane.setBounds(0, 0, 572, 430);
-	                    	setBounds(100, 100, 580, 510);			
+	                    	tabbedPane.setSize(576, 470);
+	                    	groupTabbedPane.setSize(572, 430);
+	                    	setSize(580, 510);			
 	                    	break;
                     }
                 }
-				frame.setLocationRelativeTo(null);
+				//frame.setLocationRelativeTo(null);
 			}
 		});		
 
@@ -648,5 +620,47 @@ public class ChattingAppGUI extends JFrame {
 		tabbedPane.setEnabledAt(2, false);
 		tabbedPane.setEnabledAt(3, false);
 		// End of tabbedpane
+	}
+	
+	private class DisabledItemListCellRenderer extends DefaultListCellRenderer {
+
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+        	setText((value == null) ? "" : value.toString());
+            if (isSelected) {
+               setBackground(list.getSelectionBackground());
+               setForeground(list.getSelectionForeground());
+            }
+            else {
+               setBackground(list.getBackground());
+               setForeground(list.getForeground());
+            }
+        
+            if (!commandCtrl.getUserAccount().getFriendList().get(index).getStatus()) {
+               setBackground(list.getBackground());
+               setForeground(UIManager.getColor("Label.disabledForeground"));
+            }
+        
+            setEnabled(commandCtrl.getUserAccount().getFriendList().get(index).getStatus());
+            setFont(list.getFont());
+        
+            return this;
+        }
+    }
+	private class ConditionableListSelectionListener implements ListSelectionListener {
+		public void valueChanged(ListSelectionEvent e) 
+		{
+			@SuppressWarnings("unchecked")
+			JList<Person> list = (JList<Person>) e.getSource();
+			for (int i=e.getFirstIndex(); i<=e.getLastIndex(); i++) {
+				if (list.getSelectionModel().isSelectedIndex(i)) {
+					if (!commandCtrl.getUserAccount().getFriendList().get(i).getStatus()) {
+						list.removeSelectionInterval(i, i);
+					}
+				}
+			}
+		}
 	}
 }

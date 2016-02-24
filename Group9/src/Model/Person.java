@@ -28,6 +28,15 @@ public class Person {
 		return this.status;
 	}
 	
+	/**
+	 * Set the status of the person
+	 * @param false - Offline | true - Online
+	 */
+	public void setStatus(boolean status)
+	{
+		this.status = status;
+	}
+	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
