@@ -176,10 +176,23 @@ public class ChattingAppGUI extends JFrame {
 		registerBtn = new JButton("Register");
 		registerBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String userName = userNameJT.getText().toString();
+				
+				if(userName.equals("")){
+					JOptionPane.showMessageDialog(frame, "Username cannot be empty.",
+							"Registration failed!", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else if(userName.contains(" "))
+				{
+					JOptionPane.showMessageDialog(frame, "Username cannot contain space(s).",
+							"Registration failed!", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
 				userNameExist = false;
 				userNameJT.setEnabled(false);
 				registerBtn.setEnabled(false);
-				String userName = userNameJT.getText().toString();
 				commandCtrl.sendRequest(commandCtrl.commandList[0], userName, "all");
 				
 				Timer timer = new Timer(1000, new ActionListener() {
@@ -255,18 +268,26 @@ public class ChattingAppGUI extends JFrame {
 		addFriendBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String friendName = friendNameJT.getText().toString();
-				if(friendName.equals(commandCtrl.getUserAccount().getName()))
-				{
-					JOptionPane.showMessageDialog(frame,
-						    "You cannot add yourself as friend!",
-						    "Adding friend failed",
-						    JOptionPane.ERROR_MESSAGE);
+				
+				if(friendName.equals("")){
+					JOptionPane.showMessageDialog(frame, "Friend field cannot be empty.",
+							"Registration failed!", JOptionPane.ERROR_MESSAGE);
 					return;
 				}
-				JOptionPane.showMessageDialog(frame,
-					    "Your friend request sent.",
-					    "Friend Request",
-					    JOptionPane.INFORMATION_MESSAGE);
+				else if(friendName.contains(" "))
+				{
+					JOptionPane.showMessageDialog(frame, "Friend field cannot contain space(s).",
+							"Registration failed!", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else if(friendName.equals(commandCtrl.getUserAccount().getName()))
+				{
+					JOptionPane.showMessageDialog(frame, "You cannot add yourself as friend!",
+						    "Adding friend failed", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				JOptionPane.showMessageDialog(frame, "Your friend request sent.",
+					    "Friend Request", JOptionPane.INFORMATION_MESSAGE);
 				commandCtrl.sendRequest(commandCtrl.commandList[2], "NIL", friendName);
 				friendNameJT.setText(null);
 			}
@@ -353,10 +374,23 @@ public class ChattingAppGUI extends JFrame {
 		groupCreateBtn = new JButton("Create");
 		groupCreateBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String groupName = groupNameJT.getText().toString();
+				
+				if(groupName.equals("")){
+					JOptionPane.showMessageDialog(frame, "Group name cannot be empty.",
+							"Creating group failed!", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				else if(groupName.contains(" "))
+				{
+					JOptionPane.showMessageDialog(frame, "Group name cannot contain space(s).",
+							"Creating group failed!", JOptionPane.ERROR_MESSAGE);
+					return;
+				}
+				
 				groupCreateBtn.setEnabled(false);
 				groupNameJT.setEnabled(false);
 				
-				String groupName = groupNameJT.getText().toString();
 				groupExist = false;
 				Vector<String> selectedFriend = new Vector<String>();
 				
@@ -477,7 +511,9 @@ public class ChattingAppGUI extends JFrame {
 		grpSendMsgBtn = new JButton("Send");
 		grpSendMsgBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				commandCtrl.sendGrpChatMessage(grpMsgJT.getText().toString());
+				String msg = grpMsgJT.getText().toString();
+				if(msg.equals("")) return;
+				commandCtrl.sendGrpChatMessage(msg);
 			}
 		});
 		grpSendMsgBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -550,7 +586,9 @@ public class ChattingAppGUI extends JFrame {
 		pmSendBtn = new JButton("Send");
 		pmSendBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				commandCtrl.sendPMMessage(pmMsgJT.getText().toString());
+				String msg = pmMsgJT.getText().toString();
+				if(msg.equals("")) return;
+				commandCtrl.sendPMMessage(msg);
 			}
 		});
 		pmSendBtn.setFont(new Font("Tahoma", Font.PLAIN, 16));
@@ -577,6 +615,10 @@ public class ChattingAppGUI extends JFrame {
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setFont( new Font( "Tahoma", Font.BOLD, 18 ) );
 		contentPane.add(tabbedPane);
+
+    	tabbedPane.setSize(576, 470);
+    	groupTabbedPane.setSize(572, 430);
+    	setSize(580, 510);	
     	
 		tabbedPane.addChangeListener(new ChangeListener() {
 			@Override
@@ -607,7 +649,6 @@ public class ChattingAppGUI extends JFrame {
 	                    	break;
                     }
                 }
-				//frame.setLocationRelativeTo(null);
 			}
 		});		
 
