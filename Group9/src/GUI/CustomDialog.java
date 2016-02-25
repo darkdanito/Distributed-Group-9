@@ -37,7 +37,7 @@ public class CustomDialog extends JDialog{
 	
 	public CustomDialog(JFrame frame, CommandController commandCtrl, JList<Person> grpFriendList, String groupName)
 	{
-		super ( frame, "Invite friends", true ) ; 
+		super ( frame, groupName, true ) ; 
 		this.commandCtrl = commandCtrl;
 		this.groupName = groupName;
 		panel = new JPanel();
@@ -47,15 +47,13 @@ public class CustomDialog extends JDialog{
 		JList<Person> inviteFriendListBox = grpFriendList;
 		inviteFriendListBox.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		inviteFriendListBox.setCellRenderer(new DisabledItemListCellRenderer());
-		inviteFriendListBox.addListSelectionListener(new ConditionableListSelectionListener());
+		inviteFriendListBox.addListSelectionListener(new DisabledListSelectionListener());
 		inviteFriendListBox.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		inviteFriendListBox.setBounds(15, 44, 178, 243);
-		//panel.add(inviteFriendListBox);
 
 		label = new JLabel("Friend List :");
 		label.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		label.setBounds(15, 16, 115, 20);
-		//panel.add(label);
 		
 		inviteBtn = new JButton("Invite");
 		inviteBtn.addActionListener(new ActionListener() {
@@ -71,12 +69,11 @@ public class CustomDialog extends JDialog{
 					selectedFriend.add(commandCtrl.getUserAccount().getFriendList().get(i).getName());
 				}
 				commandCtrl.inviteFriendsToGroup(selectedFriend.toArray(new String[selectedFriend.size()]), groupName);
-				dispose();
+				
 			}
 		});
 		inviteBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		inviteBtn.setBounds(15, 303, 178, 29);
-		//panel.add(inviteBtn);
 		
 		cp = getContentPane();
 		cp.setLayout(null);
@@ -115,7 +112,7 @@ public class CustomDialog extends JDialog{
             return this;
         }
     }
-	private class ConditionableListSelectionListener implements ListSelectionListener {
+	private class DisabledListSelectionListener implements ListSelectionListener {
 		public void valueChanged(ListSelectionEvent e) 
 		{
 			@SuppressWarnings("unchecked")

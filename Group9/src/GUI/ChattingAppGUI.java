@@ -81,6 +81,7 @@ public class ChattingAppGUI extends JFrame {
 	// JLists
 	public JList<Person> friendListBox;
 	public JList<Person> grpFriendListBox;
+	public JList<Person> inviteFriendListBox;
 	public JList<Group> groupListBox;
 	
 	// Other JUnit
@@ -541,12 +542,12 @@ public class ChattingAppGUI extends JFrame {
 		groupTabbedPane.add("Management", groupsSubPanel1);
 		groupTabbedPane.add("Chat", groupsSubPanel2);
 		
+		inviteFriendListBox = new JList<Person>(userAccount.getFriendList());
 		inviteFriendBtn = new JButton("Invite Friends");
 		inviteFriendBtn.addActionListener(new ActionListener() {
 			@SuppressWarnings("deprecation")
 			public void actionPerformed(ActionEvent e) {
-				CustomDialog a= new CustomDialog(frame, commandCtrl, grpFriendListBox, joinedGroupNameJT.getText().toString());
-				a.show();
+				new CustomDialog(frame, commandCtrl, inviteFriendListBox, joinedGroupNameJT.getText().toString()).show();
 			}
 		});
 		inviteFriendBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -633,9 +634,9 @@ public class ChattingAppGUI extends JFrame {
 		tabbedPane.setFont( new Font( "Tahoma", Font.BOLD, 18 ) );
 		contentPane.add(tabbedPane);	
     	
-
-		tabbedPane.setSize(380, 190);
-		setSize(386, 230);
+    	tabbedPane.setSize(576, 470);
+    	groupTabbedPane.setSize(572, 430);
+    	setSize(580, 510);	
 		
 		tabbedPane.addChangeListener(new ChangeListener() {
 			@Override

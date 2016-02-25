@@ -347,6 +347,8 @@ public class CommandController {
 	{
 		// Command structure "<type> <target> <from> <command> <content>"		
 		// if the message is from this application
+		if(!userAccount.getStatus()) return; // if user offline
+		
 		if(message[2].equals(userAccount.getName())) return; 
 		
 		// if the message is not for all or this application or user account
@@ -409,6 +411,7 @@ public class CommandController {
 				userAccount.removeFriend(i);
 				mainFrame.friendListBox.setListData(userAccount.getFriendList());
 				mainFrame.grpFriendListBox.setListData(userAccount.getFriendList());
+				mainFrame.inviteFriendListBox.setListData(userAccount.getFriendList());
 				return;
 			}
 		}
@@ -554,6 +557,7 @@ public class CommandController {
 		}
 		mainFrame.friendListBox.setListData(userAccount.getFriendList());
 		mainFrame.grpFriendListBox.setListData(userAccount.getFriendList());
+		mainFrame.inviteFriendListBox.setListData(userAccount.getFriendList());
 	}
 	
 	private void runStatusChanged(String[] message)
@@ -576,6 +580,7 @@ public class CommandController {
 		}
 		mainFrame.friendListBox.setListData(friendList);
 		mainFrame.grpFriendListBox.setListData(friendList);
+		mainFrame.inviteFriendListBox.setListData(friendList);
 	}
 	
 	private void runUserNameExistCommand(String[] message)
