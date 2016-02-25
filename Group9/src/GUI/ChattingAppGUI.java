@@ -31,6 +31,7 @@ import java.awt.event.KeyEvent;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.UIManager;
 import javax.swing.JTextPane;
@@ -100,6 +101,7 @@ public class ChattingAppGUI extends JFrame {
 	private JLabel grpMsgJL;
 	private JLabel pmChatWithJL;
 	private JLabel pmMsgLabel;
+	private JLabel lblWelcomeTo;
 	private JSeparator separator;
 	private JSeparator separator_1;
 	private JSeparator separator_2;
@@ -162,14 +164,20 @@ public class ChattingAppGUI extends JFrame {
 		accountPanel = new JPanel();
 		accountPanel.setLayout(null);
 
+		lblWelcomeTo = new JLabel("Welcome to 2107 Chat App");
+		lblWelcomeTo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblWelcomeTo.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblWelcomeTo.setBounds(42, 0, 295, 49);
+		accountPanel.add(lblWelcomeTo);
+		
 		lblUsername = new JLabel("Username");
 		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblUsername.setBounds(15, 16, 99, 33);
+		lblUsername.setBounds(42, 53, 99, 33);
 		accountPanel.add(lblUsername);
 		
 		userNameJT = new JTextField();
 		userNameJT.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		userNameJT.setBounds(129, 16, 181, 33);
+		userNameJT.setBounds(156, 53, 181, 33);
 		accountPanel.add(userNameJT);
 		userNameJT.setColumns(10);
 		
@@ -207,6 +215,7 @@ public class ChattingAppGUI extends JFrame {
 							  userNameJT.setEnabled(false);
 							  statusBtn.setVisible(true);
 							  registerBtn.setVisible(false);
+							  frame.setTitle("(Online) " + userName);
 						  }
 					  }
 					});
@@ -215,12 +224,12 @@ public class ChattingAppGUI extends JFrame {
 			}
 		});
 		registerBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		registerBtn.setBounds(109, 61, 115, 40);
+		registerBtn.setBounds(136, 98, 115, 40);
 		accountPanel.add(registerBtn);
 		
 		statusBtn = new JButton("Offline");
 		statusBtn.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		statusBtn.setBounds(109, 61, 115, 40);
+		statusBtn.setBounds(136, 98, 115, 40);
 		statusBtn.setVisible(false);
 		statusBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -231,6 +240,7 @@ public class ChattingAppGUI extends JFrame {
 					tabbedPane.setEnabledAt(1, true);
 					tabbedPane.setEnabledAt(2, true);
 					commandCtrl.sendRequest(commandCtrl.commandList[1], commandCtrl.responseList[2], "all");
+					frame.setTitle("(Online) " + commandCtrl.getUserAccount().getName());
 				}
 				else
 				{
@@ -241,6 +251,7 @@ public class ChattingAppGUI extends JFrame {
 					commandCtrl.leavePrivateChat();
 					commandCtrl.sendRequest(commandCtrl.commandList[1], commandCtrl.responseList[1], "all");
 					tabbedPane.setSelectedIndex(0);
+					frame.setTitle("(Offline) " + commandCtrl.getUserAccount().getName());
 				}
 			}
 		});
@@ -283,7 +294,13 @@ public class ChattingAppGUI extends JFrame {
 				else if(friendName.equals(commandCtrl.getUserAccount().getName()))
 				{
 					JOptionPane.showMessageDialog(frame, "You cannot add yourself as friend!",
-						    "Adding friend failed", JOptionPane.ERROR_MESSAGE);
+						    "Adding friend failed", JOptionPane.WARNING_MESSAGE);
+					return;
+				}
+				else if(commandCtrl.isFriendInList(friendName))
+				{
+					JOptionPane.showMessageDialog(frame, "Friend is already in friend list!",
+						    "Adding friend failed", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
 				JOptionPane.showMessageDialog(frame, "Your friend request sent.",
@@ -614,12 +631,12 @@ public class ChattingAppGUI extends JFrame {
 		// Start of tabbedpane
 		tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setFont( new Font( "Tahoma", Font.BOLD, 18 ) );
-		contentPane.add(tabbedPane);
-
-    	tabbedPane.setSize(576, 470);
-    	groupTabbedPane.setSize(572, 430);
-    	setSize(580, 510);	
+		contentPane.add(tabbedPane);	
     	
+
+		tabbedPane.setSize(380, 190);
+		setSize(386, 230);
+		
 		tabbedPane.addChangeListener(new ChangeListener() {
 			@Override
 			public void stateChanged(ChangeEvent e) {
@@ -629,9 +646,9 @@ public class ChattingAppGUI extends JFrame {
                     switch(pane.getSelectedIndex())
                     {
 	                    case 0:
-	                    	// width - 4, height - 40
-	                		tabbedPane.setSize(330, 160);
-	                		setSize(336, 200);
+	                    	// width - 6, height - 40
+	                    	tabbedPane.setSize(380, 190);
+	                		setSize(386, 230);
 	                    	break;
 	                    case 1:
 	                    	tabbedPane.setSize(474, 360);
@@ -653,6 +670,7 @@ public class ChattingAppGUI extends JFrame {
 		});		
 
 		tabbedPane.add("Account", accountPanel);
+		
 		tabbedPane.add("Friends", friendsPanel);
 		tabbedPane.add("Groups", groupsPanel);
 		tabbedPane.add("PM", privateMsgPanel);

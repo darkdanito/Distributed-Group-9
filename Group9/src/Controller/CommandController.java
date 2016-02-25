@@ -103,6 +103,19 @@ public class CommandController {
 		sendMsgToMainMCAddress(msg);
 	}
 	
+	public boolean isFriendInList(String friendName)
+	{
+		Vector<Person> list = userAccount.getFriendList();
+		for(int i=0; i<list.size(); i++)
+		{
+			if(list.get(i).getName().equals(friendName))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void createPrivateChat(String friendName)
 	{
 		String ipaddress = getIPAddress();
