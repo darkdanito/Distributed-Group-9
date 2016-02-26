@@ -772,7 +772,8 @@ public class CommandController {
 				        	StyleConstants.setForeground(style, Color.green);
 				        	StyleConstants.setBold(style, true);
 				        	StyleConstants.setItalic(style, true);
-				        	if(msg.contains(userAccount.getName()))
+				        	String[] msgs = msg.split(" :");
+				        	if(msgs[0].equals(userAccount.getName()))
 				        	{
 				        		msg = msg.replace(userAccount.getName(), "You");
 				        		msg = msg.replace("has", "have");
@@ -791,7 +792,8 @@ public class CommandController {
 				        	StyleConstants.setForeground(style, Color.magenta);
 				        	StyleConstants.setBold(style, true);
 				        	StyleConstants.setItalic(style, true);
-				        	if(msg.contains(userAccount.getName()))
+				        	String[] msgs = msg.split(" :");
+				        	if(msgs[0].equals(userAccount.getName()))
 				        	{
 				        		msg = msg.replace(userAccount.getName(), "You");
 				        		msg = msg.replace("has", "have");
@@ -808,7 +810,8 @@ public class CommandController {
 				        {
 				        	msg = msg.replace(colorCode[3], "");
 				        	StyleConstants.setForeground(style, Color.black);
-				        	if(msg.contains(userAccount.getName()))
+				        	String[] msgs = msg.split(" :");
+				        	if(msgs[0].equals(userAccount.getName()))
 				        	{
 				        		msg = msg.replace(userAccount.getName(), "You");
 					        	StyleConstants.setBold(style, true);
@@ -938,7 +941,8 @@ public class CommandController {
 				        	StyleConstants.setForeground(style, Color.green);
 				        	StyleConstants.setBold(style, false);
 				        	StyleConstants.setItalic(style, true);
-				        	if(msg.contains(userAccount.getName()))
+				        	String[] msgs = msg.split(" :");
+				        	if(msgs[0].equals(userAccount.getName()))
 				        	{
 				        		msg = msg.replaceFirst(userAccount.getName(), "You");
 				        		msg = msg.replace("has", "have");
@@ -955,7 +959,8 @@ public class CommandController {
 				        {
 				        	msg = msg.replace(colorCode[3], "");
 				        	StyleConstants.setForeground(style, Color.black);
-				        	if(msg.contains(userAccount.getName()))
+				        	String[] msgs = msg.split(" :");
+				        	if(msgs[0].equals(userAccount.getName()))
 				        	{
 				        		msg = msg.replaceFirst(userAccount.getName(), "You");
 					        	StyleConstants.setBold(style, true);
