@@ -47,6 +47,10 @@ public class CommandController {
 	public final String[] commandList = {"Check_Username", "Status_Changed", "Add_Friend", 
 			"Private_Chat", "IP_Used", "IP_Released", "Check_GroupName", "Create_NewGroup", "Remove_Friend"};
 	
+	/**
+	 * [0] - Request | 
+	 * [1] - Reply
+	 */
 	private final String[] messageTypes = {"Request", "Reply"};
 	
 	/**
@@ -103,6 +107,11 @@ public class CommandController {
 		sendMsgToMainMCAddress(msg);
 	}
 	
+	/** 
+	 * This method is to check whether a friend is already added into the friend list
+	 * @param friendName
+	 * @return true = added | false = not added
+	 */
 	public boolean isFriendInList(String friendName)
 	{
 		Vector<Person> list = userAccount.getFriendList();
@@ -116,6 +125,10 @@ public class CommandController {
 		return false;
 	}
 	
+	/**
+	 * This method is to build the communication for and to create private chat with a selected friend
+	 * @param friendName
+	 */
 	public void createPrivateChat(String friendName)
 	{
 		String ipaddress = getIPAddress();
@@ -151,11 +164,19 @@ public class CommandController {
 		}
 	}
 	
+	/**
+	 * This method is to leave current private chat
+	 */
 	public void leavePrivateChat()
 	{
 		leavePM();
 	}
 	
+	/**
+	 * This method is to send messages to current private chat through 
+	 * the multicastgroup and socket built for this current private chat
+	 * @param message
+	 */
 	public void sendPMMessage(String message)
 	{
 		if(pmMulticastGroup != null && pmMulticastSocket != null )
@@ -176,11 +197,20 @@ public class CommandController {
 		}
 	}	
 	
+	/**
+	 * This method to join a specific group chat
+	 * @param groupNameIndex
+	 */
 	public void joinGroup(int groupNameIndex)
 	{
 		startGroupChat(groupNameIndex);
 	}
 	
+	/**
+	 * This method is to send messages to current private chat through 
+	 * the multicastgroup and socket built for this current private chat
+	 * @param message
+	 */
 	public void sendGrpChatMessage(String message)
 	{
 		if(grpMulticastGroup != null && grpMulticastSocket != null )
@@ -201,6 +231,11 @@ public class CommandController {
 		}
 	}
 	
+	/**
+	 * This method is to invite friends selected in the friendlist to a particular group
+	 * @param friendNames
+	 * @param groupName
+	 */
 	public void inviteFriendsToGroup(String[] friendNames, String groupName)
 	{
 		String ipaddress = "";
@@ -215,11 +250,19 @@ public class CommandController {
 		addFriendToGroup(groupName, friendNames, ipaddress);
 	}
 	
+	/**
+	 * This method is to leave the current group chat
+	 */
 	public void leaveGroup()
 	{
 		leaveGroupChat();
 	}
 	
+	/**
+	 * This method is called to create a group chat with/without inviting selected friends from friend list
+	 * @param groupName
+	 * @param friendNames
+	 */
 	public void createGroupChat(String groupName, String[] friendNames)
 	{
 		Vector<Group> groupList = userAccount.getGroupList();
@@ -269,6 +312,13 @@ public class CommandController {
 		timer.start(); // Go go go!
 	}
 	
+	/**
+	 * This method is called to create group with a valid IP address. IP address for this particular group will
+	 * then be broadcasted to main mulitcast group to inform all other applications that this IP address
+	 * is being used.
+	 * @param groupName
+	 * @param friendNames
+	 */
 	private void createGroup(String groupName, String[] friendNames)//, String[] friendNames)
 	{
 		String ipaddress = getIPAddress();
@@ -281,6 +331,12 @@ public class CommandController {
 		addFriendToGroup(groupName, friendNames, ipaddress);
 	}
 	
+	/**
+	 * This method is to invite friend to the group through main multicast group
+	 * @param groupName
+	 * @param friendNames
+	 * @param ipaddress
+	 */
 	private void addFriendToGroup(String groupName, String[] friendNames, String ipaddress)
 	{
 		for(int i = 0; i < friendNames.length; i++)
@@ -330,6 +386,11 @@ public class CommandController {
 		mainThread.start();
 	}
 
+	/**
+	 * This method is used to send message with particular command, message type, and response
+	 * from this application user to other target user(s).
+	 * @param message
+	 */
 	private void sendMsgToMainMCAddress(String message)
 	{
 		try
@@ -343,6 +404,11 @@ public class CommandController {
 		}
 	}
 	
+	/**
+	 * This method is to handle all the messages received from socket 
+	 * and call the correct method based on the given command in the message.
+	 * @param message
+	 */
 	private void handleMessage(String[] message)
 	{
 		// Command structure "<type> <target> <from> <command> <content>"		
@@ -401,6 +467,10 @@ public class CommandController {
 		}
 	}
 	
+	/**
+	 * This method is handle and run the Remove_Friend command
+	 * @param message
+	 */
 	private void runRemoveFriend(String[] message)
 	{
 		Vector<Person> friendlist = userAccount.getFriendList();
@@ -417,6 +487,10 @@ public class CommandController {
 		}
 	}
 	
+	/**
+	 * This method is handle and run the Create_New_Group command
+	 * @param message
+	 */
 	private void runCreateNewGroup(String[] message)
 	{
 		String[] response = message[4].split("_");
@@ -445,6 +519,10 @@ public class CommandController {
 		}
 	}
 	
+	/**
+	 * This method is handle and run the Check_Group_Name command
+	 * @param message
+	 */
 	private void runCheckGroupName(String[] message)
 	{
 		if(message[0].equals(messageTypes[0])){ // if it is a request
@@ -481,6 +559,10 @@ public class CommandController {
 		}
 	}
 	
+	/**
+	 * This method is handle and run the PM_Request command
+	 * @param message
+	 */
 	private void runPMRequest(String[] message)
 	{
 		int n = JOptionPane.showConfirmDialog(
@@ -515,6 +597,10 @@ public class CommandController {
 		}
 	}
 	
+	/**
+	 * This method is handle and run the Add_Friend command
+	 * @param message
+	 */
 	private void runAddFriend(String[] message)
 	{
 		if(message[0].equals(messageTypes[0])){ // if it is a request
@@ -560,6 +646,10 @@ public class CommandController {
 		mainFrame.inviteFriendListBox.setListData(userAccount.getFriendList());
 	}
 	
+	/**
+	 * This method is handle and run the Status_Changed command
+	 * @param message
+	 */
 	private void runStatusChanged(String[] message)
 	{
 		Vector<Person> friendList = userAccount.getFriendList();
@@ -583,6 +673,10 @@ public class CommandController {
 		mainFrame.inviteFriendListBox.setListData(friendList);
 	}
 	
+	/**
+	 * This method is handle and run the UserName_Exist command
+	 * @param message
+	 */
 	private void runUserNameExistCommand(String[] message)
 	{	
 		if(message[0].equals(messageTypes[0])){ // if it is a request
@@ -609,6 +703,12 @@ public class CommandController {
 		}
 	}
 
+	/**
+	 * This method is to start a private message 
+	 * when an interrupt private chatting request occurs and is accepted
+	 * @param ipAddress
+	 * @param friendName
+	 */
 	private void startPM(String ipAddress, String friendName)
 	{
 		leavePM();
@@ -643,6 +743,10 @@ public class CommandController {
 		}
 	}
 	
+	/**
+	 * This is to set a thread to listen to private message socket, 
+	 * and receive and display messages for Private Message
+	 */
 	private void setPMThread()
 	{
 		pmThread = new Thread(new Runnable(){
@@ -661,7 +765,8 @@ public class CommandController {
 						String msg = new String(receivedData, 0, length);
 						StyledDocument doc = mainFrame.pmTextPane.getStyledDocument();
 				        Style style = mainFrame.pmTextPane.addStyle("I'm a Style", null);
-				        if(msg.contains(colorCode[0])) // joined
+				        
+				        if(msg.contains(colorCode[0])) // joined color display
 				        {
 				        	msg = msg.replace(colorCode[0], "");
 				        	StyleConstants.setForeground(style, Color.green);
@@ -673,14 +778,14 @@ public class CommandController {
 				        		msg = msg.replace("has", "have");
 				        	}
 				        }
-				        else if(msg.contains(colorCode[1])) // reject
+				        else if(msg.contains(colorCode[1])) // reject color display
 				        {
 				        	msg = msg.replace(colorCode[1], "");
 				        	StyleConstants.setForeground(style, Color.red);
 				        	StyleConstants.setBold(style, true);
 				        	StyleConstants.setItalic(style, true);
 				        }
-				        else if(msg.contains(colorCode[2])) // left
+				        else if(msg.contains(colorCode[2])) // left color display
 				        {
 				        	msg = msg.replace(colorCode[2], "");
 				        	StyleConstants.setForeground(style, Color.magenta);
@@ -699,7 +804,7 @@ public class CommandController {
 				        		clearPMMCSocketAndGroup();
 				        	}
 				        } 
-				        else if(msg.contains(colorCode[3])) // Username
+				        else if(msg.contains(colorCode[3])) // Username color display
 				        {
 				        	msg = msg.replace(colorCode[3], "");
 				        	StyleConstants.setForeground(style, Color.black);
@@ -728,6 +833,9 @@ public class CommandController {
 		pmThread.start();
 	}
 
+	/**
+	 * This message is to leave multicast group for current private message
+	 */
 	private void leavePM()
 	{
 		if(pmMulticastGroup == null && pmMulticastSocket == null )
@@ -763,6 +871,10 @@ public class CommandController {
 		}
 	}
 	
+	/**
+	 * This method is to setup the multicastgroup and socket for a particular group chat
+	 * @param groupNameIndex
+	 */
 	private void startGroupChat(int groupNameIndex)
 	{
 		leaveGroupChat();
@@ -798,6 +910,10 @@ public class CommandController {
 		}
 	}
 	
+	/**
+	 * This is to set a thread to listen to group chat socket, 
+	 * and receive and display the messages for Private Message
+	 */
 	private void setGrpChatThread()
 	{
 		grpChatThread = new Thread(new Runnable(){
@@ -816,7 +932,7 @@ public class CommandController {
 						String msg = new String(receivedData, 0, length);
 						StyledDocument doc = mainFrame.chatMsgTextPane.getStyledDocument();
 				        Style style = mainFrame.chatMsgTextPane.addStyle("I'm a Style", null);
-				        if(msg.contains(colorCode[0])) // joined
+				        if(msg.contains(colorCode[0])) // joined color display
 				        {
 				        	msg = msg.replace(colorCode[0], "");
 				        	StyleConstants.setForeground(style, Color.green);
@@ -828,14 +944,14 @@ public class CommandController {
 				        		msg = msg.replace("has", "have");
 				        	}
 				        }
-				        else if(msg.contains(colorCode[2])) // left
+				        else if(msg.contains(colorCode[2])) // left color display
 				        {
 				        	msg = msg.replace(colorCode[2], "");
 				        	StyleConstants.setForeground(style, Color.magenta);
 				        	StyleConstants.setBold(style, false);
 				        	StyleConstants.setItalic(style, true);
 				        } 
-				        else if(msg.contains(colorCode[3])) // Username
+				        else if(msg.contains(colorCode[3])) // Username color display
 				        {
 				        	msg = msg.replace(colorCode[3], "");
 				        	StyleConstants.setForeground(style, Color.black);
@@ -864,6 +980,9 @@ public class CommandController {
 		grpChatThread.start();
 	}
 	
+	/**
+	 * This message is to leave multicast group for current group chat
+	 */
 	private void leaveGroupChat()
 	{
 		if(grpMulticastGroup == null && grpMulticastSocket == null )
@@ -898,6 +1017,10 @@ public class CommandController {
 		}
 	}
 	
+	/**
+	 * This method releases the IP address using for the private message multicastgroup
+	 * and clears all variables used to build up the communication
+	 */
 	@SuppressWarnings("deprecation")
 	private void clearPMMCSocketAndGroup(){
 		String msg = messageTypes[0] + " all " + userAccount.getName() + 
@@ -909,6 +1032,10 @@ public class CommandController {
 		pmMulticastSocket = null;
 	}
 	
+	/**
+	 * This method releases the IP address using for the group chat multicastgroup
+	 * and clears all variables used to build up the communication
+	 */
 	@SuppressWarnings("deprecation")
 	private void clearGrpMCSocketAndGroup(){
 		grpChatThread.stop();
@@ -917,6 +1044,11 @@ public class CommandController {
 		grpMulticastSocket = null;
 	}
 	
+	/**
+	 * This method is to check the validity and unused of an IP address
+	 * @param ipAddress
+	 * @return false = invalid | true = valid
+	 */
 	private boolean isIPValid(String ipAddress)
 	{
 		String regex = "^(235).(1).([0-9]{1,3}).([0-9]{1,3})$"; // first and two number must be 235 and 1 respectively
@@ -928,6 +1060,10 @@ public class CommandController {
 		return false;
 	}
 
+	/**
+	 * This method is to return a valid IP address
+	 * @return IP address
+	 */
 	private String getIPAddress()
 	{
 		String ipaddress = "";
