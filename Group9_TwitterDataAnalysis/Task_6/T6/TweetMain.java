@@ -1,4 +1,4 @@
-package T5;
+package T6;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -8,7 +8,7 @@ import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
-public class TwitterMain {
+public class TweetMain {
 	
 	public static void main(String [] args) throws Exception{
 		
@@ -16,10 +16,10 @@ public class TwitterMain {
 		
 		Job job = Job.getInstance(conf, "TwitterMain");
 		
-		job.setJarByClass(TwitterMain.class);
+		job.setJarByClass(TweetMain.class);
 		
-		job.setMapperClass(TwitterMapper.class);
-		job.setReducerClass(TwitterReducer.class);
+		job.setMapperClass(TweetMapper.class);
+		job.setReducerClass(TweetReducer.class);
 		
 		job.setOutputKeyClass(Text.class);
 		job.setOutputValueClass(Text.class);
