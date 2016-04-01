@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="Task_5"/>
+	<classpathentry kind="src" path="Task_6"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="/usr/local/hadoop-2.6.0/share/hadoop/yarn/lib/jersey-client-1.9.jar"/>
 	<classpathentry kind="lib" path="/usr/local/hadoop-2.6.0/share/hadoop/yarn/lib/javax.inject-1.jar"/>
