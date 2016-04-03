@@ -40,8 +40,8 @@ public class ANSMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 		// taking the name column
 		String name = parts[18];
 
-		if (ip != null) {
-			context.write(new Text(ip), new IntWritable(1));
+		if (name != null) {
+			context.write(new Text(name), new IntWritable(1));
 		}
 	}
 }
