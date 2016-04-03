@@ -38,7 +38,7 @@ public class ANSMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 		String[] parts = value.toString().split(",");
 
 		// taking the name column
-		String ip = parts[18];
+		String name = parts[18];
 
 		if (ip != null) {
 			context.write(new Text(ip), new IntWritable(1));
