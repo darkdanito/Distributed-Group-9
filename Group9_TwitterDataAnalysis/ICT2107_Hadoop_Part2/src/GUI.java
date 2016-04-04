@@ -170,30 +170,24 @@ public class GUI extends JFrame {
 			
 			@Override
 			public void run() {
-				// TODO Auto-generated method stub
-				try {
-					Thread.sleep(3000);
-					try(BufferedReader br = new BufferedReader(new FileReader("C:/file.txt"))) {
-					    StringBuilder sb = new StringBuilder();
-					    String line = br.readLine();
+				//Thread.sleep(3000);
+				Path filePath = new Path("");
+				try(BufferedReader br = new BufferedReader(new FileReader("hdfs://localhost:9000/user/phamvanvung/ufo/states.txt"))) {
+				    StringBuilder sb = new StringBuilder();
+				    String line = br.readLine();
 
-					    while (line != null) {
-					    	StyledDocument doc = textPane.getStyledDocument();
-					        Style style = textPane.addStyle("I'm a Style", null);
-					
-					        try { doc.insertString(doc.getLength(), line +"\n", style); }
-					        catch (BadLocationException ex){}
-					        line = br.readLine();
-					    }
-					    //String everything = sb.toString();
-					}
-					catch(IOException ex)
-					{
-						ex.printStackTrace();
-					}
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				    while (line != null) {
+				    	StyledDocument doc = textPane.getStyledDocument();
+				        Style style = textPane.addStyle("I'm a Style", null);
+				
+				        try { doc.insertString(doc.getLength(), line +"\n", style); }
+				        catch (BadLocationException ex){}
+				        line = br.readLine();
+				    }
+				}
+				catch(IOException ex)
+				{
+					ex.printStackTrace();
 				}
 				setEnableAllButtons(true);
 			}
