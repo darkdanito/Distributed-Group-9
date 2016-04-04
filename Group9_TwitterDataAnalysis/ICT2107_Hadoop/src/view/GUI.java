@@ -1,3 +1,5 @@
+package view;
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.EventQueue;
@@ -11,6 +13,16 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyledDocument;
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FSDataInputStream;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+
+import controller.TaskFactory;
+import model.ITask;
+import model.task1.Task1;
+
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
@@ -18,6 +30,9 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.awt.event.ActionEvent;
 
 public class GUI extends JFrame {
@@ -170,10 +185,18 @@ public class GUI extends JFrame {
 			
 			@Override
 			public void run() {
-				//Thread.sleep(3000);
-				Path filePath = new Path("");
-				try(BufferedReader br = new BufferedReader(new FileReader("hdfs://localhost:9000/user/phamvanvung/ufo/states.txt"))) {
-				    StringBuilder sb = new StringBuilder();
+				try {
+					ITask task = TaskFactory.getTask(taskId);
+					task.start();
+					
+					while(!task.isDone());
+					
+					Configuration configuration = new Configuration();
+					FileSystem fs = FileSystem.get(new URI("hdfs://localhost:9000"), configuration);
+					Path filePath = new Path("/user/phamvanvung/group9_hadoop/output/task" + taskId + "/part-r-00000");
+					FSDataInputStream fsDataInputStream = fs.open(filePath);
+					BufferedReader br = new BufferedReader(new InputStreamReader(fsDataInputStream));
+					StringBuilder sb = new StringBuilder();
 				    String line = br.readLine();
 
 				    while (line != null) {
@@ -189,6 +212,10 @@ public class GUI extends JFrame {
 				{
 					ex.printStackTrace();
 				}
+				catch (URISyntaxException ex)
+				{
+					ex.printStackTrace();
+				} 
 				setEnableAllButtons(true);
 			}
 		});
