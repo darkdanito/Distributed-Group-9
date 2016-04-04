@@ -29,4 +29,3 @@ public class Task01Mapper extends Mapper<LongWritable, Text,Text,IntWritable> {
 }
 	
 }
-

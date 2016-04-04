@@ -17,4 +17,3 @@ public class Task01Reducer extends Reducer<Text, IntWritable, Text, IntWritable>
 	}
 }
 
-

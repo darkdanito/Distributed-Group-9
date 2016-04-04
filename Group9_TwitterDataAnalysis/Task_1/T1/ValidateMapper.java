@@ -23,4 +23,3 @@ public class ValidateMapper extends Mapper<LongWritable, Text, LongWritable, Tex
 		}
 	}
 }
-
