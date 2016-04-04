@@ -1,4 +1,4 @@
-package model.task1;
+package model.task3;
 
 import java.io.IOException;
 
@@ -6,7 +6,7 @@ import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
 
-public class ValidateMapper extends Mapper<LongWritable, Text, LongWritable, Text> {
+public class Task3ValidateMapper extends Mapper<LongWritable, Text, LongWritable, Text> {
 	@Override
 	protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, LongWritable, Text>.Context context)
 			throws IOException, InterruptedException {

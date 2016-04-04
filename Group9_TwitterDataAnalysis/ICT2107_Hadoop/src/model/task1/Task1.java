@@ -35,13 +35,13 @@ public class Task1 implements ITask{
 			Configuration conf = new Configuration();
 			Job job = Job.getInstance(conf, "MainSentiments");
 			job.setJarByClass(Task1.class);
-			Path inPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/input/Airline-Full-Non-Ag-DFE-Sentiment.csv");
+			Path inPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/input");
 			Path outPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/output/task1");
 			outPath.getFileSystem(conf).delete(outPath, true);
 	
 			
 			Configuration validationConf = new Configuration(false);
-			ChainMapper.addMapper(job, ValidateMapper.class, LongWritable.class, Text.class, LongWritable.class, Text.class, validationConf);
+			ChainMapper.addMapper(job, Task1ValidateMapper.class, LongWritable.class, Text.class, LongWritable.class, Text.class, validationConf);
 			
 			Configuration ansConf = new Configuration(false);
 			ChainMapper.addMapper(job, Task1Mapper.class, LongWritable.class, Text.class, Text.class, IntWritable.class, ansConf);		
