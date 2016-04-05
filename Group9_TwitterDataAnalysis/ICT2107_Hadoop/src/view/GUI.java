@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 import java.awt.Font;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -26,6 +27,8 @@ import model.task1.Task1;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
+
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -40,6 +43,7 @@ public class GUI extends JFrame {
 	private JPanel contentPane;
 	private JButton[] buttons;
 	private JTextPane textPane;
+	private JLabel lblTimeTaken;
 
 	/**
 	 * Launch the application.
@@ -168,6 +172,10 @@ public class GUI extends JFrame {
 		pmJSP.setViewportView(textPane);
 		pmJSP.setBounds(15, 16, 506, 400);
 		contentPane.add(pmJSP);
+		
+		lblTimeTaken = new JLabel("0 ms");
+		lblTimeTaken.setBounds(451,537,69,20);
+		contentPane.add(lblTimeTaken);
 	}
 	
 	private void setEnableAllButtons(Boolean value)
@@ -181,15 +189,19 @@ public class GUI extends JFrame {
 	private void doTask(int taskId)
 	{
 		setEnableAllButtons(false);
+		textPane.setText("");
 		Thread thread = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
+				long start =0, elapsed =0;
 				try {
 					ITask task = TaskFactory.getTask(taskId);
 					task.start();
-					
+
+					start = System.currentTimeMillis();
 					while(!task.isDone());
+					elapsed = System.currentTimeMillis() - start;	
 					
 					Configuration configuration = new Configuration();
 					FileSystem fs = FileSystem.get(new URI("hdfs://localhost:9000"), configuration);
@@ -216,6 +228,8 @@ public class GUI extends JFrame {
 				{
 					ex.printStackTrace();
 				} 
+				
+				lblTimeTaken.setText( elapsed + " ms");
 				setEnableAllButtons(true);
 			}
 		});

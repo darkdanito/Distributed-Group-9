@@ -21,28 +21,34 @@ public class Task5 implements ITask{
 	
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-		Configuration conf = new Configuration();
-		
-		Job job = Job.getInstance(conf, "TwitterMain");
-		
-		job.setJarByClass(Task5.class);
-		
-		job.setMapperClass(Task5Mapper.class);
-		job.setReducerClass(Task5Reducer.class);
-		
-		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(Text.class);
-		
-		Path twitterInput = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/input");
-		Path outputPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/output/task5");
-		
-		outputPath.getFileSystem(conf).delete(outputPath, true);
-		
-		FileInputFormat.addInputPath(job, twitterInput);
-		FileOutputFormat.setOutputPath(job, outputPath);
-		
-		isDone = job.waitForCompletion(true)?true:false;
+		try{
+			// TODO Auto-generated method stub
+			Configuration conf = new Configuration();
+			
+			Job job = Job.getInstance(conf, "Task5");
+			
+			job.setJarByClass(Task5.class);
+			
+			job.setMapperClass(Task5Mapper.class);
+			job.setReducerClass(Task5Reducer.class);
+			
+			job.setOutputKeyClass(Text.class);
+			job.setOutputValueClass(Text.class);
+			
+			Path twitterInput = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/input");
+			Path outputPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/output/task5");
+			
+			outputPath.getFileSystem(conf).delete(outputPath, true);
+			
+			FileInputFormat.addInputPath(job, twitterInput);
+			FileOutputFormat.setOutputPath(job, outputPath);
+			
+			isDone = job.waitForCompletion(true)?true:false;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
 	}
 
 	@Override

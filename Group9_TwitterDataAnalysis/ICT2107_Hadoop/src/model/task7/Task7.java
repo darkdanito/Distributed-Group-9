@@ -25,35 +25,41 @@ public class Task7 implements ITask{
 	
 	@Override
 	public void start() {
-		// TODO Auto-generated method stub
-		Configuration conf = new Configuration();
-		Job job = Job.getInstance(conf, "AirlineNegativeSentiments");
-		job.setJarByClass(Task7.class);
-		Path inPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/input");
-		Path outPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/output/task7");
-		outPath.getFileSystem(conf).delete(outPath, true);
-
-		// Put this file to distributed cache so we can use it to join
-		job.addCacheFile(new URI("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/ISO-3166-alpha3.tsv"));
-
-		Configuration validationConf = new Configuration(false);
-		ChainMapper.addMapper(job, Task7ValidationMapper.class, LongWritable.class, Text.class, LongWritable.class,
-				Text.class, validationConf);
-
-		Configuration ansConf = new Configuration(false);
-		ChainMapper.addMapper(job, Task7Mapper.class, LongWritable.class, Text.class, Text.class, IntWritable.class,
-				ansConf);
-
-		job.setMapperClass(ChainMapper.class);
-		job.setCombinerClass(Task7Reducer.class);
-		job.setReducerClass(Task7Reducer.class);
-		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(IntWritable.class);
-
-		FileInputFormat.addInputPath(job, inPath);
-		FileOutputFormat.setOutputPath(job, outPath);
-
-		isDone = job.waitForCompletion(true) ? true : false;
+		try{
+			// TODO Auto-generated method stub
+			Configuration conf = new Configuration();
+			Job job = Job.getInstance(conf, "Task7");
+			job.setJarByClass(Task7.class);
+			Path inPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/input");
+			Path outPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/output/task7");
+			outPath.getFileSystem(conf).delete(outPath, true);
+	
+			// Put this file to distributed cache so we can use it to join
+			job.addCacheFile(new URI("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/ISO-3166-alpha3.tsv"));
+	
+			Configuration validationConf = new Configuration(false);
+			ChainMapper.addMapper(job, Task7ValidationMapper.class, LongWritable.class, Text.class, LongWritable.class,
+					Text.class, validationConf);
+	
+			Configuration ansConf = new Configuration(false);
+			ChainMapper.addMapper(job, Task7Mapper.class, LongWritable.class, Text.class, Text.class, IntWritable.class,
+					ansConf);
+	
+			job.setMapperClass(ChainMapper.class);
+			job.setCombinerClass(Task7Reducer.class);
+			job.setReducerClass(Task7Reducer.class);
+			job.setOutputKeyClass(Text.class);
+			job.setOutputValueClass(IntWritable.class);
+	
+			FileInputFormat.addInputPath(job, inPath);
+			FileOutputFormat.setOutputPath(job, outPath);
+	
+			isDone = job.waitForCompletion(true) ? true : false;
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
 	}
 
 	@Override

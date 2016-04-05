@@ -33,7 +33,7 @@ public class Task1 implements ITask{
 	{
 		try{
 			Configuration conf = new Configuration();
-			Job job = Job.getInstance(conf, "MainSentiments");
+			Job job = Job.getInstance(conf, "Task1");
 			job.setJarByClass(Task1.class);
 			Path inPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/input");
 			Path outPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/output/task1");
