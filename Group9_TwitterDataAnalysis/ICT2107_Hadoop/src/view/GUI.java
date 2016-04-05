@@ -188,7 +188,7 @@ public class GUI extends JFrame {
 		JButton btnTask_9 = new JButton("Task 9");
 		btnTask_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				title = "(TASK 9)\nOpen Task";
+				title = "(TASK 9)\nListing the top 5 person name with negative sentiment and sort the number of tweet";
 				doTask(9);
 			}
 		});

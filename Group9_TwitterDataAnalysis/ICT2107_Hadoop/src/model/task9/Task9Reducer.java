@@ -30,7 +30,14 @@ public class Task9Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
 	@Override
 	protected void cleanup(Context context) throws IOException, InterruptedException {
 		Map<Text, IntWritable> sortedMap = sortValues(map);
+		int counter=0;
+		
 		for (Text key : sortedMap.keySet()) {
+			if(counter>=5){
+				System.out.println("");
+                break;
+            }
+			counter++;
 			context.write(key, sortedMap.get(key));
 		}
 	}
