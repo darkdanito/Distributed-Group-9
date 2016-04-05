@@ -33,13 +33,12 @@ public class Task4Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
 		}
 		
 		unsortMap.put(key.toString(), total);
-	//	System.out.println("Counter: " + key + " : "+total);
 	}
 	
 	@Override
 	protected void cleanup(Context context)
 			throws	IOException, InterruptedException{
-		//keep track the top 5
+		//keep track the top 3
 		
 		Map<String, Integer> sortedMapDesc = sortByComparator(unsortMap, false); // false = DESC
 		for(int i = 0; i < 3; i++){

@@ -56,8 +56,6 @@ public class Task2Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
             if (sentiment.equals("negative") && countryName != null) {
                  
                 context.write(new Text(countryName), new IntWritable(1));
-                 
-                System.out.println("ANSMapper: " +countryName);
             }
         }
     }

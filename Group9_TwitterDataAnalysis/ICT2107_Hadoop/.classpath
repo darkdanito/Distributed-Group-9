@@ -181,5 +181,7 @@
 	<classpathentry kind="lib" path="/usr/local/hadoop-2.6.0/share/hadoop/common/hadoop-common-2.6.0.jar"/>
 	<classpathentry kind="lib" path="/home/phamvanvung/Downloads/chartlin/jcommon-1.0.23.jar"/>
 	<classpathentry kind="lib" path="/home/phamvanvung/Downloads/chartlin/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="external_jars/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="external_jars/jfreechart-1.0.19.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

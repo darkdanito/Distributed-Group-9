@@ -283,22 +283,10 @@ public class GUI extends JFrame {
 				        row.addElement(rowLines[1]);
 				        rowData.addElement(row);
 				        
-				        //if(taskId == 1 || taskId == 3 || taskId == 4 || taskId == 8 || taskId == 9){
-				        String[] lines = line.split("\t");
-//				        String key = "";
-//				        String value = "";
-//				        for(int i = 0; i < lines.length ; i++)
-//				        {
-//				        	if(i < (lines.length-1))
-//				        		key += lines[i];
-//				        	else
-//				        		value += lines[i];
-//				        }
-				        total += Integer.parseInt(lines[1]);
-				        tempresult.put(lines[0], lines[1]);
+				        total += Integer.parseInt(rowLines[1]);
+				        tempresult.put(rowLines[0], rowLines[1]);
 
 					    line = br.readLine();
-				        //}
 				    }
 		        
 			        
@@ -327,6 +315,7 @@ public class GUI extends JFrame {
 					setEnableAllButtons(true);
 				}
 				
+				contentPane.remove(pmJSP);
 				columnNames = new Vector<String>();
 		        columnNames.addElement("");
 		        columnNames.addElement("Values");
