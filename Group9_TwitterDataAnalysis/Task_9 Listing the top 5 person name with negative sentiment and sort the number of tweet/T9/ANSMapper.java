@@ -39,8 +39,10 @@ public class ANSMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 
 		// taking the name column
 		String name = parts[18];
+		// taking the airline_sentiment column
+		String sentiment = parts[14];
 
-		if (name != null) {
+		if (name != null && sentiment.contains("negative")) {
 			context.write(new Text(name), new IntWritable(1));
 		}
 	}
