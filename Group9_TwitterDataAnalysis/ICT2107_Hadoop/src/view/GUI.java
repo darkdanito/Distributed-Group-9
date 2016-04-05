@@ -283,7 +283,7 @@ public class GUI extends JFrame {
 				        row.addElement(rowLines[1]);
 				        rowData.addElement(row);
 				        
-				        total += Integer.parseInt(rowLines[1]);
+				        total += Double.parseDouble(rowLines[1]);
 				        tempresult.put(rowLines[0], rowLines[1]);
 
 					    line = br.readLine();
@@ -292,7 +292,7 @@ public class GUI extends JFrame {
 			        
 			        for(String key : tempresult.keySet())
 			        {
-			        	double value = Integer.parseInt(tempresult.get(key).toString());
+			        	double value = Double.parseDouble(tempresult.get(key).toString());
 			        	double newValue = Math.round((value/total) * 10000) / 100;
 			        	result.put(key+ "(" + newValue + "%)", tempresult.get(key).toString());
 			        }
@@ -331,7 +331,7 @@ public class GUI extends JFrame {
 				
 				lblTimeTaken.setText( task.timeElapsed() + " ms");
 				setEnableAllButtons(true);
-				if(taskId == 1 || taskId == 3 || taskId == 4 || taskId == 8 || taskId == 9)
+				if(taskId == 1 || taskId == 3 || taskId == 4 || taskId == 8 || taskId == 9 || taskId == 5)
 				{
 					btnViewChart.setEnabled(true);
 				}
