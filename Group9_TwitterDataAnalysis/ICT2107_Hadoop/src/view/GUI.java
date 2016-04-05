@@ -190,6 +190,7 @@ public class GUI extends JFrame {
 	{
 		setEnableAllButtons(false);
 		textPane.setText("");
+		lblTimeTaken.setText("Loading");
 		Thread thread = new Thread(new Runnable() {
 			
 			@Override
@@ -202,7 +203,7 @@ public class GUI extends JFrame {
 					start = System.currentTimeMillis();
 					while(!task.isDone());
 					elapsed = System.currentTimeMillis() - start;	
-					
+					System.out.println(System.currentTimeMillis());
 					Configuration configuration = new Configuration();
 					FileSystem fs = FileSystem.get(new URI("hdfs://localhost:9000"), configuration);
 					Path filePath = new Path("/user/phamvanvung/group9_hadoop/output/task" + taskId + "/part-r-00000");
@@ -223,11 +224,18 @@ public class GUI extends JFrame {
 				catch(IOException ex)
 				{
 					ex.printStackTrace();
+					setEnableAllButtons(true);
 				}
 				catch (URISyntaxException ex)
 				{
 					ex.printStackTrace();
+					setEnableAllButtons(true);
 				} 
+				catch(Exception ex)
+				{
+					ex.printStackTrace();
+					setEnableAllButtons(true);
+				}
 				
 				lblTimeTaken.setText( elapsed + " ms");
 				setEnableAllButtons(true);

@@ -8,6 +8,7 @@ import model.task4.Task4;
 import model.task5.Task5;
 import model.task6.Task6;
 import model.task7.Task7;
+import model.task8.Task8;
 import model.task9.Task9;
 
 public class TaskFactory {
@@ -29,6 +30,8 @@ public class TaskFactory {
 			return new Task6();
 		case 7:
 			return new Task7();
+		case 8:
+			return new Task8();
 		case 9:
 			return new Task9();
 		default:
