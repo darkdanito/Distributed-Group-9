@@ -293,8 +293,8 @@ public class GUI extends JFrame {
 			        for(String key : tempresult.keySet())
 			        {
 			        	double value = Double.parseDouble(tempresult.get(key).toString());
-			        	double newValue = Math.round((value/total) * 10000) / 100;
-			        	result.put(key+ "(" + newValue + "%)", tempresult.get(key).toString());
+			        	double newValue = (value/total) * 100;
+			        	result.put(key+ String.format("(%.2f)", newValue) + "%", tempresult.get(key).toString());
 			        }
 			        line = br.readLine();
 				    
