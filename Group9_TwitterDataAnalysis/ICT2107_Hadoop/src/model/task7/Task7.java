@@ -17,14 +17,17 @@ import model.ITask;
 public class Task7 implements ITask{
 
 	private boolean isDone;
+	private long start, end;
 	
 	public Task7()
 	{
 		isDone = false;
+		start = end = 0;
 	}
 	
 	@Override
 	public void start() {
+		start = System.currentTimeMillis();
 		try{
 			// TODO Auto-generated method stub
 			Configuration conf = new Configuration();
@@ -55,11 +58,13 @@ public class Task7 implements ITask{
 			FileOutputFormat.setOutputPath(job, outPath);
 	
 			isDone = job.waitForCompletion(true) ? true : false;
+			
 		}
 		catch(Exception ex)
 		{
 			ex.printStackTrace();
 		}
+		end = System.currentTimeMillis();
 	}
 
 	@Override
@@ -68,6 +73,10 @@ public class Task7 implements ITask{
 		return isDone;
 	}
 
-	
+	@Override
+	public long timeElapsed() {
+		// TODO Auto-generated method stub
+		return end-start;
+	}
 
 }

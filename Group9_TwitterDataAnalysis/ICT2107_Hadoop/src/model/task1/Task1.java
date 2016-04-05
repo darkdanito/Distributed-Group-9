@@ -18,10 +18,14 @@ import model.ITask;
 
 public class Task1 implements ITask{
 	private Boolean isDone;
+	private long start;
+	private long end;
 	
 	public Task1()
 	{
 		isDone = false;
+		start = 0;
+		end = 0;
 	}
 	
 	public boolean isDone()
@@ -32,6 +36,7 @@ public class Task1 implements ITask{
 	public void start()
 	{
 		try{
+			start = System.currentTimeMillis();
 			Configuration conf = new Configuration();
 			Job job = Job.getInstance(conf, "Task1");
 			job.setJarByClass(Task1.class);
@@ -58,10 +63,17 @@ public class Task1 implements ITask{
 			FileOutputFormat.setOutputPath(job, outPath);
 			
 			isDone = job.waitForCompletion(true)?true:false;
+			end = System.currentTimeMillis();
 		}
 		catch(Exception ex)
 		{
 			ex.printStackTrace();
 		}
+	}
+
+	@Override
+	public long timeElapsed() {
+		// TODO Auto-generated method stub
+		return end-start;
 	}
 }

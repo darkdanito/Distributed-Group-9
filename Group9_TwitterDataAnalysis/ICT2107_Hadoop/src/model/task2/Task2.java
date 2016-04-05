@@ -17,15 +17,18 @@ import model.ITask;
 public class Task2 implements ITask{
 
 	private boolean isDone;
+	private long start, end;
 	
 	public Task2()
 	{
 		isDone = false;
+		start = end = 0;
 	}
 	
 	@Override
 	public void start() {
 		// TODO Auto-generated method stub
+		start = System.currentTimeMillis();
 		try
 		{
 			Configuration conf = new Configuration();
@@ -61,12 +64,19 @@ public class Task2 implements ITask{
 		{
 			ex.printStackTrace();
 		}
+		end = System.currentTimeMillis();
 	}
 
 	@Override
 	public boolean isDone() {
 		// TODO Auto-generated method stub
 		return isDone;
+	}
+	
+	@Override
+	public long timeElapsed() {
+		// TODO Auto-generated method stub
+		return end-start;
 	}
 	
 }
