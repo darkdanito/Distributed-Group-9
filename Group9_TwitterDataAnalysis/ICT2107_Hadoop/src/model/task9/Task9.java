@@ -17,9 +17,10 @@ import model.ITask;
 /************************************************************************************************
  * Developer: Khaleef 																			*
  * 																								*
- * Date: 05 April 2016  																		*
+ * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Main Class for the Task 9. Handles the settings and configurations				*
+ * 				related such as the input and output, using chain mapper						*
  ************************************************************************************************/
 public class Task9 implements ITask{
 
@@ -60,7 +61,7 @@ public class Task9 implements ITask{
 					ansConf);
 	
 			job.setMapperClass(ChainMapper.class);
-			job.setCombinerClass(Task9Reducer.class);
+			//job.setCombinerClass(Task9Reducer.class);
 			job.setReducerClass(Task9Reducer.class);
 			job.setOutputKeyClass(Text.class);
 			job.setOutputValueClass(IntWritable.class);

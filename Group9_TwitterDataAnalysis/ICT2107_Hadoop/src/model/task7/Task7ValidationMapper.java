@@ -10,12 +10,12 @@ import org.apache.hadoop.io.Text;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Validation Mapper class for Task 7.												*
  ************************************************************************************************/
 public class Task7ValidationMapper extends Mapper<LongWritable, Text, LongWritable, Text> {
 	
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Write to context if valid 														*
 	 * 																								*
 	 ************************************************************************************************/
 	@Override
@@ -29,7 +29,7 @@ public class Task7ValidationMapper extends Mapper<LongWritable, Text, LongWritab
 	}
 
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Split the rows into different parts and check for validity						*
 	 * 																								*
 	 ************************************************************************************************/
 	private boolean isValid(String line) {

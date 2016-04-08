@@ -19,7 +19,8 @@ import model.ITask;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Main Class for the Task 7. Handles the settings and configurations				*
+ * 				related such as the input and output, using chain mapper						*
  ************************************************************************************************/
 public class Task7 implements ITask{
 
@@ -59,7 +60,7 @@ public class Task7 implements ITask{
 					ansConf);
 	
 			job.setMapperClass(ChainMapper.class);
-			job.setCombinerClass(Task7Reducer.class);
+			//job.setCombinerClass(Task7Reducer.class);
 			job.setReducerClass(Task7Reducer.class);
 			job.setOutputKeyClass(Text.class);
 			job.setOutputValueClass(IntWritable.class);

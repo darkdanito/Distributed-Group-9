@@ -12,11 +12,19 @@ import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 
+/************************************************************************************************
+ * Developer: Khaleef 																			*
+ * 																								*
+ * Date: 03 April 2016  																		*
+ * 																								*
+ * Description: Reducer class for Task 9.														*
+ ************************************************************************************************/
 public class Task9Reducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 	private Map<Text, IntWritable> map = new HashMap<>();
 
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: It will count the number of sentiment											*
+	 * 				and put into a Map for sorting												  	*
 	 * 																								*
 	 ************************************************************************************************/
 	@Override
@@ -35,7 +43,9 @@ public class Task9Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
 	}
 
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Cleanup method to sort the unsorted map into a sorted 							*
+	 * 				map as well as displaying the top 5												*
+	 * 				. 																				*
 	 * 																								*
 	 ************************************************************************************************/
 	@Override
@@ -56,7 +66,10 @@ public class Task9Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
 		}
 	}
 
-	// Sort based on desc order
+	/************************************************************************************************
+	 * Description: Map sorting for List															*
+	 * 																								*
+	 ************************************************************************************************/
 	private static <K extends Comparable, V extends Comparable> Map<K, V> sortValues(Map<K, V> map) {
 		
 		List<Map.Entry<K, V>> iterator = new LinkedList<Map.Entry<K, V>>(map.entrySet());
