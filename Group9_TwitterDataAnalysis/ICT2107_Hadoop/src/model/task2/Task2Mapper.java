@@ -65,9 +65,8 @@ public class Task2Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     }
  
 	/************************************************************************************************
-	 * Description: The map function is to filter out information from Airline-Full-Non-Ag-DFE-Sentiment.csv.
-	 * Check for any negative sentiments and if the country name is not null.*
-	 * set the context.write as countryName and new IntWritable(1) as the total count.																								*
+	 * Description: Split the information from Airline-Full-Non-Ag-DFE-Sentiment.csv into different 
+	 * column parts.																						*
 	 ************************************************************************************************/
     @Override
     protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, IntWritable>.Context context)
@@ -79,8 +78,9 @@ public class Task2Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         String sentiment = parts[14];
          
     	/************************************************************************************************
-    	 * Description: XXXXX  																			*
-    	 * 																								*
+    	 * Description: The map function is to filter out information from Airline-Full-Non-Ag-DFE-Sentiment.csv.
+	 * Check for any negative sentiments and if the country name is not null.*
+	 * set the context.write as countryName and new IntWritable(1) as the total count.																							*
     	 ************************************************************************************************/
         if (countryCode != null && sentiment != null) {
              
