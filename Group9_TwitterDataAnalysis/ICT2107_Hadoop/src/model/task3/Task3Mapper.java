@@ -25,7 +25,7 @@ public class Task3Mapper extends Mapper<LongWritable, Text,Text,IntWritable> {
 	
 	/************************************************************************************************
 	 * Description: For this class, a buffered reader is needed to extract out the country names 	*
-	 * 				by the country code.																*
+	 * 				by the country code.															*
 	 ************************************************************************************************/
 	@Override
 	protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, IntWritable>.Context context)

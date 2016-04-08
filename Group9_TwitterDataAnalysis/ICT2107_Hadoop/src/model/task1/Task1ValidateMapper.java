@@ -21,7 +21,7 @@ public class Task1ValidateMapper extends Mapper<LongWritable, Text, LongWritable
 			throws IOException, InterruptedException {
 		
 		/************************************************************************************************
-		 * Description: If the value is valid, we will map the value to a key.  							*
+		 * Description: If the value is valid, we will map the value to a key.  						*
 		 * 																								*
 		 ************************************************************************************************/
 		if(isValid(value.toString())){
