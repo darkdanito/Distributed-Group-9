@@ -15,14 +15,19 @@ import org.apache.hadoop.io.Text;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: 
+ * Mapper<KEYIN,VALUEIN,KEYOUT,VALUEOUT>
+ * Maps input key/value pairs to a set of intermediate key/value pairs.
+ * Maps are the individual tasks which transform input records into a intermediate records. 
+ * The transformed intermediate records need not be of the same type as the input records. 
+ * A given input pair may map to zero or many output pairs.*
  ************************************************************************************************/
 public class Task2Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 	Hashtable<String, String> countryCodes = new Hashtable<>();
 
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
-	 * 																								*
+	 * Description: This part of setup is suppose to get information from the tsv file from the HDFS location. 
+																					*
 	 ************************************************************************************************/
 	@Override
     protected void setup(Mapper<LongWritable, Text, Text, IntWritable>.Context context)
@@ -35,7 +40,9 @@ public class Task2Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         String line = null;
          
     	/************************************************************************************************
-    	 * Description: XXXXX  																			*
+    	 * Description: Loop infinitely to read each line of the file. If file has something inside,
+    	 * check for any spaces in between, and put them into a Hash table. parts[0] and parts[1] indicate
+    	 * the different columns of where to get the information from the tsv file.*
     	 * 																								*
     	 ************************************************************************************************/
         while (true) {
@@ -58,8 +65,9 @@ public class Task2Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
     }
  
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
-	 * 																								*
+	 * Description: The map function is to filter out information from Airline-Full-Non-Ag-DFE-Sentiment.csv.
+	 * Check for any negative sentiments and if the country name is not null.*
+	 * set the context.write as countryName and new IntWritable(1) as the total count.																								*
 	 ************************************************************************************************/
     @Override
     protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, IntWritable>.Context context)
