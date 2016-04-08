@@ -15,7 +15,8 @@ import model.ITask;
  * 																								*
  * Date: 04 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Main Class for the Task 8. Handles the settings related to the Hadoop  			*
+ * 				application for Task 8.															*
  ************************************************************************************************/
 public class Task8 implements ITask{
 	

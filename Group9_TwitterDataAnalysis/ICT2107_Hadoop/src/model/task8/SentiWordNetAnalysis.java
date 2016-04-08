@@ -10,7 +10,8 @@ import java.util.Map;
  * 																								*
  * Date: 04 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Class to for the performing the sentiment analysis on the tweets.				*
+ * 				Code referenced from http://sentiwordnet.isti.cnr.it							*
  ************************************************************************************************/
 public class SentiWordNetAnalysis {
 
@@ -18,7 +19,8 @@ public class SentiWordNetAnalysis {
 	private Map<String, Double> dictionary;
 
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Class for the SentiWordNet to read their text file that contain their 			*
+	 * 				key words and score																*
 	 * 																								*
 	 ************************************************************************************************/
 	public SentiWordNetAnalysis(List<String> wordList) throws IOException {
@@ -37,18 +39,19 @@ public class SentiWordNetAnalysis {
 
 				// If it's a comment, skip this line.
 				if (!line.trim().startsWith("#")) {
+					
 					// We use tab separation
 					String[] data = line.split("\t");
 					String wordTypeMarker = data[0];
 
 					// Is it a valid line? Otherwise, through exception.
 					if (data.length != 6) {
+						
 						throw new IllegalArgumentException(
 								"Incorrect tabulation format in file, line: " + lineNumber);
 					}
 
-					// Calculate synset score as score = PosS - NegS
-					// A synset refers to one line
+					// Calculate synset score as score = PosS - NegS which refer to one line
 					Double synsetScore = Double.parseDouble(data[2])
 							- Double.parseDouble(data[3]);
 
@@ -73,8 +76,8 @@ public class SentiWordNetAnalysis {
 						// Add map to term if it doesn't have one 
 						// tempDictionary -> HashMap<String, HashMap<Integer, Double>>
 						if (!tempDictionary.containsKey(synTerm)) {
-							tempDictionary.put(synTerm,
-									new HashMap<Integer, Double>());
+							
+							tempDictionary.put(synTerm, new HashMap<Integer, Double>());
 						}
 
 						// Add synset link to synterm
@@ -84,14 +87,12 @@ public class SentiWordNetAnalysis {
 			}
 			
 			// Go through all the terms.
-			for (Map.Entry<String, HashMap<Integer, Double>> entry : tempDictionary
-					.entrySet()) {
+			for (Map.Entry<String, HashMap<Integer, Double>> entry : tempDictionary.entrySet()) {
 				
 				String word = entry.getKey();
 				Map<Integer, Double> synSetScoreMap = entry.getValue(); //SymTermRank (int) and SymScore (double)
 
-				// Calculate weighted average. Weigh the synsets according to
-				// their rank.
+				// Calculate weighted average. Weigh the synsets according to their rank.
 				// Score= 1/2*first + 1/3*second + 1/4*third ..... etc.
 				// Sum = 1/1 + 1/2 + 1/3 ...
 				double score = 0.0;

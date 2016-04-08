@@ -11,14 +11,14 @@ import org.apache.hadoop.io.Text;
  * 																								*
  * Date: 04 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Reducer class for Task 8.														*
  ************************************************************************************************/
 public class Task8Reducer extends Reducer<Text, IntWritable, Text, IntWritable> {
     
 	private IntWritable result = new IntWritable();
 
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Reducer method for Task 8. It will do a count of the different type of emotion	*
 	 * 																								*
 	 ************************************************************************************************/
     public void reduce(Text key, Iterable<IntWritable> values, Context context

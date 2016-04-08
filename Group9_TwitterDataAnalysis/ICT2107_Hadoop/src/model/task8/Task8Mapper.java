@@ -19,7 +19,7 @@ import org.apache.hadoop.io.Text;
  * 																								*
  * Date: 04 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Mappper class for Task 8.  														*
  ************************************************************************************************/
 public class Task8Mapper extends Mapper<Object, Text, Text, IntWritable> {
 
@@ -31,7 +31,7 @@ public class Task8Mapper extends Mapper<Object, Text, Text, IntWritable> {
 	String tweet;
 
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Read the data taken from the Twitter dataset.									*
 	 * 																								*
 	 ************************************************************************************************/
 	public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
@@ -41,6 +41,8 @@ public class Task8Mapper extends Mapper<Object, Text, Text, IntWritable> {
 		if (isValid(record)) {
 		
 			String[] parts = record.split(",");
+			
+			// As parts[21] contains the parameter for the tweet
 			tweet = parts[21];
 		}
 		
@@ -49,6 +51,7 @@ public class Task8Mapper extends Mapper<Object, Text, Text, IntWritable> {
 			getSentiFile(context);
 		}
 
+		// if the tweet is not null, compare the tweet to the sentiWordNetAnalyseer 
 		if (tweet != null) {
 			
 			String senti = sentiWordNetAnalyser.analyze(tweet).toString();
@@ -59,7 +62,10 @@ public class Task8Mapper extends Mapper<Object, Text, Text, IntWritable> {
 	}
 
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Check if the row taken from the Twitter dataset is correct or not.				*
+	 * 				Checking of the parts is of length 27 is due to the total column of				*
+	 * 				the Twitter dataset is 27 columns. If the row is length is 27 then we use it	*
+	 * 				by returning true, else return false.											*
 	 * 																								*
 	 ************************************************************************************************/
 	private boolean isValid(String line) {
@@ -77,7 +83,7 @@ public class Task8Mapper extends Mapper<Object, Text, Text, IntWritable> {
 	}
 
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Read the SentiWordNet file														*
 	 * 																								*
 	 ************************************************************************************************/
 	private void getSentiFile(Context context) throws IOException {
