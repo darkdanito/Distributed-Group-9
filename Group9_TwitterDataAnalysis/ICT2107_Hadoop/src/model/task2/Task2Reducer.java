@@ -74,7 +74,7 @@ public class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
      
 	/************************************************************************************************
 	 * Description: XXXXX  																			*
-	 *  The comparator accepts integers and compare the assocated integers of the given integer value in the map.																						*
+	 *  The comparator accepts integers and compare the associated integers of the given integer value in the map.																						*
 	 ************************************************************************************************/
     private static <K,V extends Comparable<?super V>> Map<K,V> sortValue(Map<K,V> map){
         List<Map.Entry<K,V>> queries = new LinkedList<Map.Entry<K,V>>(map.entrySet());
