@@ -7,10 +7,21 @@ import java.util.Collections;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
+/************************************************************************************************
+ * Developer: Yun Yong 																			*
+ * 																								*
+ * Date: 01 April 2016  																		*
+ * 																								*
+ * Description: XXXXX  																			*
+ ************************************************************************************************/
 public class Task6Reducer extends Reducer<Text, Text, Text, Text> {
 
 	int totalcount = 0;
 	
+	/************************************************************************************************
+	 * Description: XXXXX  																			*
+	 * 																								*
+	 ************************************************************************************************/
 	@Override
 	protected void reduce(Text key, Iterable<Text> values, 
 			Reducer<Text, Text, Text, Text>.Context context) 
@@ -20,6 +31,10 @@ public class Task6Reducer extends Reducer<Text, Text, Text, Text> {
 		
 		String stringCount;
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		for(Text t: values)
 		{
 			String parts[] = t.toString().split("\t");
@@ -30,14 +45,11 @@ public class Task6Reducer extends Reducer<Text, Text, Text, Text> {
 				{
 					count += 1;
 				}
-
 			}
 		}
 		
 		stringCount = String.valueOf(count);
 		
 		context.write(key, new Text(stringCount));
-		System.out.println("Reducer: " + key + " : " + stringCount);
-
 	}
 }

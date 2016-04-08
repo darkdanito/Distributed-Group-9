@@ -44,6 +44,13 @@ import java.util.Map;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 
+/************************************************************************************************
+ * Developer: Anton 																			*
+ * 																								*
+ * Date: 03 April 2016  																		*
+ * 																								*
+ * Description: XXXXX  																			*
+ ************************************************************************************************/
 public class GUI extends JFrame {
 
 	private JPanel contentPane;
@@ -58,47 +65,66 @@ public class GUI extends JFrame {
 	private Vector<String> columnNames;
 	private JScrollPane pmJSP;
 
-	/**
-	 * Launch the application.
-	 */
+	// Launch the application.
 	public static void main(String[] args) {
+		
 		EventQueue.invokeLater(new Runnable() {
+			
 			public void run() {
+				
 				try {
+					
 					GUI frame = new GUI();
 					frame.setVisible(true);
+					
 				} catch (Exception e) {
+					
 					e.printStackTrace();
 				}
 			}
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	// Create the frame.
 	public GUI() {
+		
 		setResizable(false);
 		setTitle("Hadoop - ICT2107");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 542, 609);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
 		setContentPane(contentPane);
+		
 		contentPane.setLayout(null);
+		
 		buttons = new JButton[9];
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		JButton btnTask_1 = new JButton("Task 1");
 		btnTask_1.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent arg0) {
+				
 				title = "(TASK 1)\nHow many negative reasons? (e.g., \"late flight\" or \"rude service\")";
+				
 				doTask(1);
 			}
 		});
+		
 		btnTask_1.setBounds(15, 435, 115, 29);
 		contentPane.add(btnTask_1);
 		buttons[0] = btnTask_1;
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		JButton btnTask_2 = new JButton("Task 2");
 		btnTask_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -111,6 +137,10 @@ public class GUI extends JFrame {
 		contentPane.add(btnTask_2);
 		buttons[1] = btnTask_2;
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		JButton btnTask_3 = new JButton("Task 3");
 		btnTask_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,6 +153,10 @@ public class GUI extends JFrame {
 		contentPane.add(btnTask_3);
 		buttons[2] = btnTask_3;
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		JButton btnTask_4 = new JButton("Task 4");
 		btnTask_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,6 +168,10 @@ public class GUI extends JFrame {
 		contentPane.add(btnTask_4);
 		buttons[3] = btnTask_4;
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		JButton btnTask_5 = new JButton("Task 5");
 		btnTask_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -145,6 +183,10 @@ public class GUI extends JFrame {
 		contentPane.add(btnTask_5);
 		buttons[4] = btnTask_5;
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		JButton btnTask_6 = new JButton("Task 6");
 		btnTask_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -158,6 +200,10 @@ public class GUI extends JFrame {
 		contentPane.add(btnTask_6);
 		buttons[5] = btnTask_6;
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		JButton btnTask_7 = new JButton("Task 7");
 		btnTask_7.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -170,6 +216,10 @@ public class GUI extends JFrame {
 		contentPane.add(btnTask_7);
 		buttons[6] = btnTask_7;
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		JButton btnTask_8 = new JButton("Task 8");
 		btnTask_8.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -185,6 +235,10 @@ public class GUI extends JFrame {
 		contentPane.add(btnTask_8);
 		buttons[7] = btnTask_8;
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		JButton btnTask_9 = new JButton("Task 9");
 		btnTask_9.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -196,6 +250,10 @@ public class GUI extends JFrame {
 		contentPane.add(btnTask_9);
 		buttons[8] = btnTask_9;
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		btnViewChart = new JButton("View chart");
 		btnViewChart.addActionListener(new ActionListener() {
 			
@@ -209,6 +267,10 @@ public class GUI extends JFrame {
 		btnViewChart.setBounds(15, 528, 115, 29);
 		contentPane.add(btnViewChart);
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		resultTable = new JTable();
 	    resultTable.setFont(new Font("Tahoma", Font.PLAIN, 15));
 	    FontMetrics metrics = resultTable.getFontMetrics(new Font("Tahoma", Font.PLAIN, 20));
@@ -219,10 +281,18 @@ public class GUI extends JFrame {
 		pmJSP.setBounds(15, 116, 506, 300);
 		contentPane.add(pmJSP);
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		lblTimeTaken = new JLabel("0 ms");
 		lblTimeTaken.setBounds(451,537,69,20);
 		contentPane.add(lblTimeTaken);
 		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		titleTextPane = new JTextPane();
 		titleTextPane.setEditable(false);
 		titleTextPane.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -232,6 +302,10 @@ public class GUI extends JFrame {
 		contentPane.add(pmJSP1);
 	}
 	
+	/************************************************************************************************
+	 * Description: XXXXX  																			*
+	 * 																								*
+	 ************************************************************************************************/
 	private void setEnableAllButtons(Boolean value)
 	{
 		for(int i = 0; i < buttons.length ; i++)
@@ -240,6 +314,10 @@ public class GUI extends JFrame {
 		}
 	}
 	
+	/************************************************************************************************
+	 * Description: XXXXX  																			*
+	 * 																								*
+	 ************************************************************************************************/
 	private void doTask(int taskId)
 	{
 		setEnableAllButtons(false);

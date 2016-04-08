@@ -10,6 +10,14 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import model.ITask;
 
+/************************************************************************************************
+ * Developer: Yun Yong 																			*
+ * 																								*
+ * Date: 01 April 2016  																		*
+ * 																								*
+ * Description: Main Class for the Task 5. Handles the settings related to the Hadoop  			*
+ * 				application for Task 5.															*
+ ************************************************************************************************/
 public class Task5 implements ITask{
 
 	private boolean isDone;
@@ -23,9 +31,11 @@ public class Task5 implements ITask{
 	
 	@Override
 	public void start() {
+		
 		start = System.currentTimeMillis();
+		
 		try{
-			// TODO Auto-generated method stub
+
 			Configuration conf = new Configuration();
 			
 			Job job = Job.getInstance(conf, "Task5");
@@ -52,19 +62,19 @@ public class Task5 implements ITask{
 		{
 			ex.printStackTrace();
 		}
+		
 		end = System.currentTimeMillis();
 	}
 
 	@Override
 	public boolean isDone() {
-		// TODO Auto-generated method stub
+
 		return isDone;
 	}
 	
 	@Override
 	public long timeElapsed() {
-		// TODO Auto-generated method stub
+
 		return end-start;
-	}
-	
+	}	
 }

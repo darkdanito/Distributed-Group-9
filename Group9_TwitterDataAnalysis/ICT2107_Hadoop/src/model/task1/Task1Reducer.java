@@ -6,14 +6,34 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 
+/************************************************************************************************
+ * Developer: Winnie	  																		*
+ * 																								*
+ * Date: 03 April 2016  																		*
+ * 																								*
+ * Description: XXXXX  																			*
+ ************************************************************************************************/
 public class Task1Reducer extends Reducer<Text, IntWritable, Text, IntWritable> {
+	
+	/************************************************************************************************
+	 * Description: XXXXX  																			*
+	 * 																								*
+	 ************************************************************************************************/
 	@Override
 	protected void reduce(Text key, Iterable<IntWritable> values,
 			Reducer<Text, IntWritable, Text, IntWritable>.Context context) throws IOException, InterruptedException {
+		
 		int count = 0;
+		
+		/************************************************************************************************
+		 * Description: XXXXX  																			*
+		 * 																								*
+		 ************************************************************************************************/
 		for (IntWritable value: values) {
+			
 			count+=value.get();
 		}
+		
 		context.write(key, new IntWritable(count));
 	}
 }

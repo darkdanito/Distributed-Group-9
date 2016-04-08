@@ -9,14 +9,17 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.chain.ChainMapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
-import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import model.ITask;
 
-
-
+/************************************************************************************************
+ * Developer: Winnie	  																		*
+ * 																								*
+ * Date: 03 April 2016  																		*
+ * 																								*
+ * Description: XXXXX  																			*
+ ************************************************************************************************/
 public class Task3 implements ITask{
 
 	private boolean isDone;
@@ -30,12 +33,16 @@ public class Task3 implements ITask{
 	
 	@Override
 	public void start() {
+		
 		start = System.currentTimeMillis();
+		
 		try{
-			// TODO Auto-generated method stub
+			
 			Configuration conf = new Configuration();
+			
 			Job job = Job.getInstance(conf, "Task3");
 			job.setJarByClass(Task3.class);
+			
 			Path inPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/input");
 			Path outPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/output/task3");
 			outPath.getFileSystem(conf).delete(outPath, true);
@@ -71,14 +78,13 @@ public class Task3 implements ITask{
 
 	@Override
 	public boolean isDone() {
-		// TODO Auto-generated method stub
+
 		return isDone;
 	}
 	
 	@Override
 	public long timeElapsed() {
-		// TODO Auto-generated method stub
+
 		return end-start;
 	}
-	
 }

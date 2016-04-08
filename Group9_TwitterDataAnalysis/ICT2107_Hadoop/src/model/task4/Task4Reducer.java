@@ -16,10 +16,21 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.Reducer.Context;
 
+/************************************************************************************************
+ * Developer: Anton	  																			*
+ * 																								*
+ * Date: 03 April 2016  																		*
+ * 																								*
+ * Description: XXXXX  																			*
+ ************************************************************************************************/
 public class Task4Reducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 	
 	Map<String, Integer> unsortMap = new HashMap<String, Integer> ();
 	
+	/************************************************************************************************
+	 * Description: XXXXX  																			*
+	 * 																								*
+	 ************************************************************************************************/
 	@Override
 	protected void reduce(Text key, Iterable<IntWritable> values, 
 			Reducer<Text, IntWritable, Text, IntWritable>.Context context) 
@@ -35,18 +46,28 @@ public class Task4Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
 		unsortMap.put(key.toString(), total);
 	}
 	
+	/************************************************************************************************
+	 * Description: XXXXX  																			*
+	 * 																								*
+	 ************************************************************************************************/
 	@Override
 	protected void cleanup(Context context)
 			throws	IOException, InterruptedException{
-		//keep track the top 3
 		
+		// Keep track the top 3		
 		Map<String, Integer> sortedMapDesc = sortByComparator(unsortMap, false); // false = DESC
+		
 		for(int i = 0; i < 3; i++){
+		
 			String key = (String) sortedMapDesc.keySet().toArray()[i];
 			context.write(new Text(key), new IntWritable(sortedMapDesc.get(key)));
 		}		
 	}
 	
+	/************************************************************************************************
+	 * Description: XXXXX  																			*
+	 * 																								*
+	 ************************************************************************************************/
 	private static Map<String, Integer> sortByComparator(Map<String, Integer> unsortMap, final boolean order)
     {
 
@@ -55,8 +76,7 @@ public class Task4Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
         // Sorting the list based on values
         Collections.sort(list, new Comparator<Entry<String, Integer>>()
         {
-            public int compare(Entry<String, Integer> o1,
-                    Entry<String, Integer> o2)
+            public int compare(Entry<String, Integer> o1, Entry<String, Integer> o2)
             {
                 if (order)
                 {
@@ -72,6 +92,7 @@ public class Task4Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
 
         // Maintaining insertion order with the help of LinkedList
         Map<String, Integer> sortedMap = new LinkedHashMap<String, Integer>();
+        
         for (Entry<String, Integer> entry : list)
         {
             sortedMap.put(entry.getKey(), entry.getValue());

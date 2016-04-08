@@ -10,9 +10,20 @@ import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 
+/************************************************************************************************
+ * Developer: Jamie	  																			*
+ * 																								*
+ * Date: 03 April 2016  																		*
+ * 																								*
+ * Description: XXXXX  																			*
+ ************************************************************************************************/
 public class Task2Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 	Hashtable<String, String> countryCodes = new Hashtable<>();
 
+	/************************************************************************************************
+	 * Description: XXXXX  																			*
+	 * 																								*
+	 ************************************************************************************************/
 	@Override
     protected void setup(Mapper<LongWritable, Text, Text, IntWritable>.Context context)
             throws IOException, InterruptedException {
@@ -23,23 +34,33 @@ public class Task2Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
          
         String line = null;
          
+    	/************************************************************************************************
+    	 * Description: XXXXX  																			*
+    	 * 																								*
+    	 ************************************************************************************************/
         while (true) {
              
             line = br.readLine();
              
             if (line != null) {
+            	
                 String parts[] = line.split("\t");
                 countryCodes.put(parts[0], parts[1]);
+                
             } else {
-                break;// finished reading
-            }
-             
+            	
+            	// Finished reading
+                break;
+            }    
         }
          
-        br.close();
-         
+        br.close();      
     }
  
+	/************************************************************************************************
+	 * Description: XXXXX  																			*
+	 * 																								*
+	 ************************************************************************************************/
     @Override
     protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, IntWritable>.Context context)
             throws IOException, InterruptedException {
@@ -49,6 +70,10 @@ public class Task2Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         String countryCode = parts[10];
         String sentiment = parts[14];
          
+    	/************************************************************************************************
+    	 * Description: XXXXX  																			*
+    	 * 																								*
+    	 ************************************************************************************************/
         if (countryCode != null && sentiment != null) {
              
             String countryName = countryCodes.get(countryCode);

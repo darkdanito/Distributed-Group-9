@@ -14,6 +14,13 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import model.ITask;
 
+/************************************************************************************************
+ * Developer: Khaleef 																			*
+ * 																								*
+ * Date: 05 April 2016  																		*
+ * 																								*
+ * Description: XXXXX  																			*
+ ************************************************************************************************/
 public class Task9 implements ITask{
 
 	private boolean isDone;
@@ -28,12 +35,15 @@ public class Task9 implements ITask{
 
 	@Override
 	public void start() {
+		
 		start = System.currentTimeMillis();
+		
 		try{
-			// TODO Auto-generated method stub
 			Configuration conf = new Configuration();
+			
 			Job job = Job.getInstance(conf, "Task9");
 			job.setJarByClass(Task9.class);
+			
 			Path inPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/input");
 			Path outPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/output/task9");
 			outPath.getFileSystem(conf).delete(outPath, true);
@@ -64,19 +74,19 @@ public class Task9 implements ITask{
 		{
 			ex.printStackTrace();
 		}
+		
 		end = System.currentTimeMillis();
 	}
 
 	@Override
 	public boolean isDone() {
-		// TODO Auto-generated method stub
+
 		return isDone;
 	}
 	
 	@Override
 	public long timeElapsed() {
-		// TODO Auto-generated method stub
+
 		return end-start;
 	}
-
 }

@@ -14,6 +14,13 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.Text;
 
+/************************************************************************************************
+ * Developer: Yun Yong 																			*
+ * 																								*
+ * Date: 04 April 2016  																		*
+ * 																								*
+ * Description: XXXXX  																			*
+ ************************************************************************************************/
 public class Task8Mapper extends Mapper<Object, Text, Text, IntWritable> {
 
 	private final static IntWritable one = new IntWritable(1);
@@ -23,6 +30,10 @@ public class Task8Mapper extends Mapper<Object, Text, Text, IntWritable> {
 	
 	String tweet;
 
+	/************************************************************************************************
+	 * Description: XXXXX  																			*
+	 * 																								*
+	 ************************************************************************************************/
 	public void map(Object key, Text value, Context context) throws IOException, InterruptedException {
 	
 		String record = value.toString();
@@ -47,6 +58,10 @@ public class Task8Mapper extends Mapper<Object, Text, Text, IntWritable> {
 
 	}
 
+	/************************************************************************************************
+	 * Description: XXXXX  																			*
+	 * 																								*
+	 ************************************************************************************************/
 	private boolean isValid(String line) {
 		
 		String[] parts = line.split(",");
@@ -61,6 +76,10 @@ public class Task8Mapper extends Mapper<Object, Text, Text, IntWritable> {
 		}
 	}
 
+	/************************************************************************************************
+	 * Description: XXXXX  																			*
+	 * 																								*
+	 ************************************************************************************************/
 	private void getSentiFile(Context context) throws IOException {
 		
 		Configuration conf = context.getConfiguration();

@@ -1,7 +1,5 @@
 package model.task4;
 
-import java.io.IOException;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
@@ -12,6 +10,13 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import model.ITask;
  
+/************************************************************************************************
+ * Developer: Anton	  																			*
+ * 																								*
+ * Date: 03 April 2016  																		*
+ * 																								*
+ * Description: XXXXX  																			*
+ ************************************************************************************************/
 public class Task4 implements ITask{
 	
 	private boolean isDone;
@@ -27,7 +32,7 @@ public class Task4 implements ITask{
 	public void start() {
 		start = System.currentTimeMillis();
 		try{
-			// TODO Auto-generated method stub
+
 			Configuration conf = new Configuration();
 	
 	    	Job job = Job.getInstance(conf, "Task4");
@@ -61,14 +66,13 @@ public class Task4 implements ITask{
 
 	@Override
 	public boolean isDone() {
-		// TODO Auto-generated method stub
+
 		return isDone;
 	}
  
 	@Override
 	public long timeElapsed() {
-		// TODO Auto-generated method stub
+
 		return end-start;
 	}
-	
 }

@@ -5,11 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/************************************************************************************************
+ * Developer: Yun Yong 																			*
+ * 																								*
+ * Date: 04 April 2016  																		*
+ * 																								*
+ * Description: XXXXX  																			*
+ ************************************************************************************************/
 public class SentiWordNetAnalysis {
 
 	public enum SENTIMENT {HAPPY, NEUTRAL, SAD, ANGRY};
 	private Map<String, Double> dictionary;
 
+	/************************************************************************************************
+	 * Description: XXXXX  																			*
+	 * 																								*
+	 ************************************************************************************************/
 	public SentiWordNetAnalysis(List<String> wordList) throws IOException {
 		
 		// This is our main dictionary representation

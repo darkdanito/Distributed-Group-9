@@ -1,6 +1,6 @@
 package model.task1;
 
-import java.net.URI;
+//import java.net.URI;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -10,13 +10,19 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.chain.ChainMapper;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
-import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import model.ITask;
 
+/************************************************************************************************
+ * Developer: Winnie	  																		*
+ * 																								*
+ * Date: 03 April 2016  																		*
+ * 																								*
+ * Description: XXXXX  																			*
+ ************************************************************************************************/
 public class Task1 implements ITask{
+	
 	private Boolean isDone;
 	private long start;
 	private long end;
@@ -37,14 +43,16 @@ public class Task1 implements ITask{
 	{
 		try{
 			start = System.currentTimeMillis();
+			
 			Configuration conf = new Configuration();
+			
 			Job job = Job.getInstance(conf, "Task1");
 			job.setJarByClass(Task1.class);
+			
 			Path inPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/input");
 			Path outPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/output/task1");
 			outPath.getFileSystem(conf).delete(outPath, true);
 	
-			
 			Configuration validationConf = new Configuration(false);
 			ChainMapper.addMapper(job, Task1ValidateMapper.class, LongWritable.class, Text.class, LongWritable.class, Text.class, validationConf);
 			
@@ -73,7 +81,7 @@ public class Task1 implements ITask{
 
 	@Override
 	public long timeElapsed() {
-		// TODO Auto-generated method stub
+		
 		return end-start;
 	}
 }
