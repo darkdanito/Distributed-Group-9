@@ -11,13 +11,16 @@ import org.apache.hadoop.io.Text;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: The main function for Task2ValidationMapper is to check if the 
+ * Airline-Full-Non-Ag-DFE-Sentiment.csv has 27 rows, if it is true, then
+ * passed the values to context.write(key, value), if it is false then dont pass the values to
+ * context.write*
  ************************************************************************************************/
 public class Task2ValidationMapper extends Mapper<LongWritable, Text, LongWritable, Text> {
 	
 	/************************************************************************************************
 	 * Description: XXXXX  																			*
-	 * 																								*
+	 * Check for validity of the string value.																								*
 	 ************************************************************************************************/
 	@Override
     protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, LongWritable, Text>.Context context)
@@ -31,7 +34,7 @@ public class Task2ValidationMapper extends Mapper<LongWritable, Text, LongWritab
      
 	/************************************************************************************************
 	 * Description: XXXXX  																			*
-	 * 																								*
+	 * Split the rows into different parts.																								*
 	 ************************************************************************************************/
     private boolean isValid(String line){
      
@@ -39,7 +42,7 @@ public class Task2ValidationMapper extends Mapper<LongWritable, Text, LongWritab
         
     	/************************************************************************************************
     	 * Description: XXXXX  																			*
-    	 * 																								*
+    	 * Check for the length of the rows.																								*
     	 ************************************************************************************************/
         if (parts.length==27){
          
