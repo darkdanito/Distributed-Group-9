@@ -19,7 +19,8 @@ import model.ITask;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Main Class for the Task 7. Handles the settings and configurations				*
+ * 				related such as the input and output, using chain mapper						*
  ************************************************************************************************/
 public class Task7 implements ITask{
 

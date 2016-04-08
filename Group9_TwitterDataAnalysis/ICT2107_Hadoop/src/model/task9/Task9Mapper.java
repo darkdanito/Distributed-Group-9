@@ -14,14 +14,15 @@ import org.apache.hadoop.io.Text;
  * 																								*
  * Date: 05 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Mapper class for Task 9.														*
  ************************************************************************************************/
 public class Task9Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 	Hashtable<String, String> countryCodes = new Hashtable<>();
 
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
-	 * 																								*
+	 * Description: This part of setup is suppose to get information from the tsv file from the 	*
+	 * 				HDFS location. 																	*
+	 *																								*
 	 ************************************************************************************************/
 	@Override
 	protected void setup(Mapper<LongWritable, Text, Text, IntWritable>.Context context)
@@ -52,7 +53,8 @@ public class Task9Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 	}
 
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Splitting all column, taking the name columan and sentiment column 				*
+	 *  			with negative sentiment and writing to the context   							*
 	 * 																								*
 	 ************************************************************************************************/
 	@Override
