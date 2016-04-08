@@ -60,7 +60,7 @@ public class Task7 implements ITask{
 					ansConf);
 	
 			job.setMapperClass(ChainMapper.class);
-			job.setCombinerClass(Task7Reducer.class);
+			//job.setCombinerClass(Task7Reducer.class);
 			job.setReducerClass(Task7Reducer.class);
 			job.setOutputKeyClass(Text.class);
 			job.setOutputValueClass(IntWritable.class);
