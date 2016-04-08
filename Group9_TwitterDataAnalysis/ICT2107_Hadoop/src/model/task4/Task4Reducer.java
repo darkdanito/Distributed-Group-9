@@ -21,14 +21,15 @@ import org.apache.hadoop.mapreduce.Reducer.Context;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Reducer class for Task 4.  						   								*
  ************************************************************************************************/
 public class Task4Reducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 	
 	Map<String, Integer> unsortMap = new HashMap<String, Integer> ();
 	
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Reducer method for Task 5. It will count the number of positive sentiments,		*
+	 * 				and put into a Map for sorting												  	*
 	 * 																								*
 	 ************************************************************************************************/
 	@Override
@@ -47,7 +48,8 @@ public class Task4Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
 	}
 	
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Cleanup method to sort the unsorted map into a sorted map that only take in the	*
+	 * 				top 3. 																			*
 	 * 																								*
 	 ************************************************************************************************/
 	@Override
@@ -65,7 +67,7 @@ public class Task4Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
 	}
 	
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Map sorting for List															*
 	 * 																								*
 	 ************************************************************************************************/
 	private static Map<String, Integer> sortByComparator(Map<String, Integer> unsortMap, final boolean order)
