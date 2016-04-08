@@ -92,7 +92,7 @@ public class Task8Mapper extends Mapper<Object, Text, Text, IntWritable> {
 	private void getSentiFile(Context context) throws IOException {
 		
 		Configuration conf = context.getConfiguration();
-		conf.set("sentiwordnetfile", Constants.hadoopPath + "/SentiWordNet.txt");
+		conf.set("sentiwordnetfile", "/" + Constants.hadoopPath + "/SentiWordNet.txt");
 		
 		String swnPath = conf.get("sentiwordnetfile");
 		

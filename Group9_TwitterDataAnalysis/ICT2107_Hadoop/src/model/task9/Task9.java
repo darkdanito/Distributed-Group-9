@@ -13,6 +13,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import model.ITask;
+import util.Constants;
 
 /************************************************************************************************
  * Developer: Khaleef 																			*
@@ -45,12 +46,12 @@ public class Task9 implements ITask{
 			Job job = Job.getInstance(conf, "Task9");
 			job.setJarByClass(Task9.class);
 			
-			Path inPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/input");
-			Path outPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/output/task9");
+			Path inPath = new Path("hdfs://localhost:9000/" + Constants.hadoopPath + "/input");
+			Path outPath = new Path("hdfs://localhost:9000/" + Constants.hadoopPath + "/output/task9");
 			outPath.getFileSystem(conf).delete(outPath, true);
 	
 			// Put this file to distributed cache so we can use it to join
-			job.addCacheFile(new URI("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/ISO-3166-alpha3.tsv"));
+			job.addCacheFile(new URI("hdfs://localhost:9000/" + Constants.hadoopPath + "/ISO-3166-alpha3.tsv"));
 	
 			Configuration validationConf = new Configuration(false);
 			ChainMapper.addMapper(job, Task9ValidationMapper.class, LongWritable.class, Text.class, LongWritable.class,

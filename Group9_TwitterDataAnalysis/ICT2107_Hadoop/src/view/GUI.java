@@ -331,7 +331,7 @@ public class GUI extends JFrame {
 					
 					Configuration configuration = new Configuration();
 					FileSystem fs = FileSystem.get(new URI("hdfs://localhost:9000"), configuration);
-					Path filePath = new Path(Constants.hadoopPath + "/output/task" + taskId + "/part-r-00000");
+					Path filePath = new Path("/" + Constants.hadoopPath + "/output/task" + taskId + "/part-r-00000");
 					FSDataInputStream fsDataInputStream = fs.open(filePath);
 					BufferedReader br = new BufferedReader(new InputStreamReader(fsDataInputStream));
 				    String line = br.readLine();
@@ -379,7 +379,7 @@ public class GUI extends JFrame {
 				    }
 		        
 			        // Processing data for displaying into chart for some tasks
-				    if(taskId == 1 || taskId == 3 || taskId == 4 || taskId == 8 || taskId == 9 || taskId == 5)
+				    if(taskId == 1 || taskId == 3 || taskId == 4 || taskId == 8 || taskId == 9)
 				    {
 				        for(String key : tempresult.keySet())
 				        {
@@ -411,7 +411,7 @@ public class GUI extends JFrame {
 				
 				lblTimeTaken.setText( task.timeElapsed() + " ms");
 				setEnableAllButtons(true);
-				if(taskId == 1 || taskId == 3 || taskId == 4 || taskId == 8 || taskId == 9 || taskId == 5)
+				if(taskId == 1 || taskId == 3 || taskId == 4 || taskId == 8 || taskId == 9)
 				{
 					btnViewChart.setEnabled(true);
 				}
