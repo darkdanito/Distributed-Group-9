@@ -312,6 +312,7 @@ public class GUI extends JFrame {
 	{
 		setEnableAllButtons(false);
 		btnViewChart.setEnabled(false);
+		btnSetPath.setEnabled(false);
 		titleTextPane.setText(title);
 		lblTimeTaken.setText("Loading");
 		
@@ -411,6 +412,7 @@ public class GUI extends JFrame {
 				
 				lblTimeTaken.setText( task.timeElapsed() + " ms");
 				setEnableAllButtons(true);
+				btnSetPath.setEnabled(true);
 				if(taskId == 1 || taskId == 3 || taskId == 4 || taskId == 8 || taskId == 9)
 				{
 					btnViewChart.setEnabled(true);
