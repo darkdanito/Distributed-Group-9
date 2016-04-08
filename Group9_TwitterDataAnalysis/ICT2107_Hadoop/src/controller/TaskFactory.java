@@ -16,14 +16,16 @@ import model.task9.Task9;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: This class factory is used to create a Task and return it back as ITask 		*
+ * 				interface to the caller															*
  ************************************************************************************************/
 public class TaskFactory {
 	
-	/************************************************************************************************
-	 * Description: XXXXX  																			*
-	 * 																								*
-	 ************************************************************************************************/
+	/**
+	 * To create the correct task and return it as ITask interface
+	 * @param taskId task number that is to be run
+	 * @return ITask interface
+	 */
 	public static ITask getTask(int taskId)
 	{
 		switch(taskId)

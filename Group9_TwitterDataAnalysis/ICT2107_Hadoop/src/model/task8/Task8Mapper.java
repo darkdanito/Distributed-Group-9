@@ -9,6 +9,9 @@ import java.util.List;
 
 import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.mapreduce.Mapper;
+
+import util.Constants;
+
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -89,7 +92,7 @@ public class Task8Mapper extends Mapper<Object, Text, Text, IntWritable> {
 	private void getSentiFile(Context context) throws IOException {
 		
 		Configuration conf = context.getConfiguration();
-		conf.set("sentiwordnetfile", "/user/phamvanvung/group9_hadoop/SentiWordNet.txt");
+		conf.set("sentiwordnetfile", Constants.hadoopPath + "/SentiWordNet.txt");
 		
 		String swnPath = conf.get("sentiwordnetfile");
 		

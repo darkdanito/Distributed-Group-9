@@ -5,7 +5,8 @@ package model;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: This class provides an interface for the other component or main program to		*
+ * 				call method in each Taskx class													*
  ************************************************************************************************/
 public interface ITask {
 	

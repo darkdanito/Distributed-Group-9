@@ -9,6 +9,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import model.ITask;
+import util.Constants;
 
 /************************************************************************************************
  * Developer: Yun Yong 																			*
@@ -47,8 +48,8 @@ public class Task8 implements ITask{
 		    job.setOutputKeyClass(Text.class);
 		    job.setOutputValueClass(IntWritable.class);
 		    
-		    Path inputPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/input"); 
-			Path outputPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/output/task8"); 
+		    Path inputPath = new Path("hdfs://localhost:9000/" + Constants.hadoopPath + "/input"); 
+			Path outputPath = new Path("hdfs://localhost:9000/" + Constants.hadoopPath + "/output/task8"); 
 			FileInputFormat.addInputPath(job, inputPath);
 			FileOutputFormat.setOutputPath(job, outputPath);
 		    outputPath.getFileSystem(conf).delete(outputPath, true);

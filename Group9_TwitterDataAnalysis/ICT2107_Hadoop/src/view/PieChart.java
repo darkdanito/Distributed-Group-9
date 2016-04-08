@@ -12,7 +12,7 @@ import org.jfree.data.general.DefaultPieDataset;
  * 																								*
  * Date: 05 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: This class is to construct pie chart to display data virtually					*
  ************************************************************************************************/
 public class PieChart {
 	
@@ -25,10 +25,9 @@ public class PieChart {
 		this.result = result;
 	}
 	
-	/************************************************************************************************
-	 * Description: XXXXX  																			*
-	 * 																								*
-	 ************************************************************************************************/
+	/**
+	 * To open another frame window to dispay the chart created
+	 */
 	public void View()
 	{
 		DefaultPieDataset pieDataset = new DefaultPieDataset();
