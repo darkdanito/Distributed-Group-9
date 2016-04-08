@@ -61,7 +61,7 @@ public class Task9 implements ITask{
 					ansConf);
 	
 			job.setMapperClass(ChainMapper.class);
-			job.setCombinerClass(Task9Reducer.class);
+			//job.setCombinerClass(Task9Reducer.class);
 			job.setReducerClass(Task9Reducer.class);
 			job.setOutputKeyClass(Text.class);
 			job.setOutputValueClass(IntWritable.class);
