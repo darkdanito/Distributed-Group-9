@@ -18,7 +18,8 @@ import org.apache.hadoop.io.Text;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Reducer is input the grouped output of a Mapper. 
+ * In the phase the framework, for each Reducer, fetches the relevant partition of the output of all the Mappers																		*
  ************************************************************************************************/
 public class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 
@@ -28,8 +29,7 @@ public class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
     private Map<String, Integer> sortMap = new HashMap<>();
  
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
-	 * 																								*
+	 * Description: Set a total value 																								*
 	 ************************************************************************************************/
     @Override
     protected void reduce(Text key, Iterable<IntWritable> values,
@@ -39,7 +39,8 @@ public class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
         
     	/************************************************************************************************
     	 * Description: XXXXX  																			*
-    	 * 																								*
+    	 * Loop through the IntWritable values that were passed from the Mapper class and add them for each
+    	 * country name.*
     	 ************************************************************************************************/
         for(IntWritable value:values){
         	
@@ -50,7 +51,7 @@ public class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
     }
      
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Using the default natural ordering of sorted map Integer key which implement Comparable interface																		*
 	 * 																								*
 	 ************************************************************************************************/
     @Override
@@ -73,7 +74,7 @@ public class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
      
 	/************************************************************************************************
 	 * Description: XXXXX  																			*
-	 * 																								*
+	 *  The comparator accepts strings and compare the assocated values of the given string key in the map.																						*
 	 ************************************************************************************************/
     private static <K,V extends Comparable<?super V>> Map<K,V> sortValue(Map<K,V> map){
         List<Map.Entry<K,V>> queries = new LinkedList<Map.Entry<K,V>>(map.entrySet());
@@ -81,7 +82,7 @@ public class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
              
         	/************************************************************************************************
         	 * Description: XXXXX  																			*
-        	 * 																								*
+        	 * return (v2.getValue()).compareTo(v1.getValue()); is setting the values in descending order. 																								*
         	 ************************************************************************************************/
             @Override
             public int compare(Map.Entry<K, V> v1 ,Map.Entry<K,V> v2){
@@ -94,7 +95,7 @@ public class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
         
     	/************************************************************************************************
     	 * Description: XXXXX  																			*
-    	 * 																								*
+    	 * This is to put the sorted value into a Hash table and also the country name.																							*
     	 ************************************************************************************************/
         for(Map.Entry<K, V> query : queries){
         	
