@@ -17,7 +17,7 @@ import org.apache.hadoop.io.Text;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Reducer class for Task 7.														*
  ************************************************************************************************/
 public class Task7Reducer extends Reducer<Text, IntWritable, Text, IntWritable> {
 	private Map<Text, IntWritable> map = new HashMap<>();

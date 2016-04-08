@@ -72,16 +72,17 @@ public class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
     }
      
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
-	 *  The comparator accepts integers and compare the associated integers of the given integer value in the map.																						*
+	 * Description: The comparator accepts integers and compare the associated  					*
+	 *   			integers of the given integer value in the map.									*
 	 ************************************************************************************************/
     private static <K,V extends Comparable<?super V>> Map<K,V> sortValue(Map<K,V> map){
         List<Map.Entry<K,V>> queries = new LinkedList<Map.Entry<K,V>>(map.entrySet());
         Collections.sort(queries, new Comparator<Map.Entry<K,V>>(){
              
         	/************************************************************************************************
-        	 * Description: XXXXX  																			*
-        	 * return (v2.getValue()).compareTo(v1.getValue()); is setting the values in descending order. 																								*
+        	 * Description: return (v2.getValue()).compareTo(v1.getValue()); 								*
+			 *				is setting the values in descending order.  									*
+        	 *  																							*
         	 ************************************************************************************************/
             @Override
             public int compare(Map.Entry<K, V> v1 ,Map.Entry<K,V> v2){
@@ -93,8 +94,8 @@ public class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
         Map<K, V> sortedMap = (Map<K, V>) new LinkedHashMap<K,V>();
         
     	/************************************************************************************************
-    	 * Description: XXXXX  																			*
-    	 * This is to put the sorted value into a Hash table and also the country name.																							*
+    	 * Description: This is to put the sorted value into a Hash table and also the country name. 	*
+    	 * 																								*
     	 ************************************************************************************************/
         for(Map.Entry<K, V> query : queries){
         	
