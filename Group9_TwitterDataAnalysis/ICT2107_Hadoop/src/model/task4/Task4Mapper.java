@@ -12,14 +12,14 @@ import org.apache.hadoop.mapreduce.Mapper;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Mappper class for Task 4.   													*
  ************************************************************************************************/
 public class Task4Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 	
 	IntWritable one = new IntWritable(1);
 	
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Read the data taken from the Twitter dataset.  									*
 	 * 																								*
 	 ************************************************************************************************/
 	@Override
@@ -28,7 +28,9 @@ public class Task4Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 			throws IOException, InterruptedException 
 	{	
 		/************************************************************************************************
-		 * Description: XXXXX  																			*
+		 * Description: Ensure that the airline data and airline_sentiment data are valid. By ensuring 	*
+		 * 				that they are not null. If it is valid, it will check if the sentiment equals	*
+		 * 				to "positive", if it is equal it will be written to the context					*
 		 * 																								*
 		 ************************************************************************************************/
 		if(isValid(value.toString()))
@@ -36,11 +38,11 @@ public class Task4Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 			String[] parts = value.toString().split(",");
 	
 			String airline = parts[16];
-			String tweet = parts[14];
+			String airlineSentiment = parts[14];
 			
-			if (airline != null && tweet != null) 
+			if (airline != null && airlineSentiment != null) 
 			{	
-				if (tweet.equals("positive")){
+				if (airlineSentiment.equals("positive")){
 					
 					context.write(new Text(airline), one);
 				}
@@ -49,7 +51,10 @@ public class Task4Mapper extends Mapper<LongWritable, Text, Text, IntWritable> {
 	}
 
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Check if the row taken from the Twitter dataset is correct or not.				*
+	 * 				Checking of the parts is of length 27 is due to the total column of				*
+	 * 				the Twitter dataset is 27 columns. If the row is length is 27 then we use it	*
+	 * 				by returning true, else return false.											*
 	 * 																								*
 	 ************************************************************************************************/
 	private boolean isValid(String line)

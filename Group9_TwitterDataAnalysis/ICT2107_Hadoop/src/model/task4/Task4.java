@@ -11,11 +11,12 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import model.ITask;
  
 /************************************************************************************************
- * Developer: Anton	  																			*
+ * Developer: Anton 																			*
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Main Class for the Task 4. Handles the settings related to the Hadoop  			*
+ * 				application for Task 4.															*
  ************************************************************************************************/
 public class Task4 implements ITask{
 	
