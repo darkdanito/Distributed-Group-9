@@ -15,7 +15,8 @@ import model.ITask;
  * 																								*
  * Date: 01 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Main Class for the Task 6. Handles the settings related to the Hadoop  			*
+ * 				application for Task 6.															*
  ************************************************************************************************/
 public class Task6 implements ITask{
 

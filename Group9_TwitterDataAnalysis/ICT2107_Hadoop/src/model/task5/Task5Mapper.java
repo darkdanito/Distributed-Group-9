@@ -11,7 +11,7 @@ import org.apache.hadoop.mapreduce.Mapper;
  * 																								*
  * Date: 01 April 2016  																		*
  * 																								*
- * Description: Mappper class for Task 5.  																			*
+ * Description: Mappper class for Task 5.  														*					*
  ************************************************************************************************/
 public class Task5Mapper extends Mapper<LongWritable, Text, Text, Text> {
 	

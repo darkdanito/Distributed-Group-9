@@ -18,18 +18,19 @@ import org.apache.hadoop.io.Text;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: Reducer is input the grouped output of a Mapper. 
- * In the phase the framework, for each Reducer, fetches the relevant partition of the output of all the Mappers																		*
+ * Description: Reducer is input the grouped output of a Mapper. 								*
+ * 				In the phase the framework, for each Reducer, fetches the relevant partition 	*
+ * 				of the output of all the Mappers												*
  ************************************************************************************************/
 public class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> {
-
-//	private Map<Text, IntWritable> map = new HashMap<>();
 
 	Text totalIW = new Text();
     private Map<String, Integer> sortMap = new HashMap<>();
  
 	/************************************************************************************************
-	 * Description: Set a total value 																								*
+	 * Description: Loop through the IntWritable values that were passed from the Mapper class and 	*
+	 * 				add them for each country name.													*
+	 * 																								*
 	 ************************************************************************************************/
     @Override
     protected void reduce(Text key, Iterable<IntWritable> values,
@@ -37,11 +38,7 @@ public class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
     {
         int total = 0;
         
-    	/************************************************************************************************
-    	 * Description: XXXXX  																			*
-    	 * Loop through the IntWritable values that were passed from the Mapper class and add them for each
-    	 * country name.*
-    	 ************************************************************************************************/
+
         for(IntWritable value:values){
         	
             total+= value.get();
@@ -51,11 +48,13 @@ public class Task2Reducer extends Reducer<Text, IntWritable, Text, IntWritable> 
     }
      
 	/************************************************************************************************
-	 * Description: Using the default natural ordering of sorted map Integer key which implement Comparable interface																		*
+	 * Description: Using the default natural ordering of sorted map Integer key which implement 	*
+	 * 				Comparable interface															*
 	 * 																								*
 	 ************************************************************************************************/
     @Override
-    protected void cleanup(Reducer<Text,IntWritable,Text,IntWritable>.Context context)throws IOException, InterruptedException
+    protected void cleanup(Reducer<Text,IntWritable,Text,IntWritable>.Context context)
+    		throws IOException, InterruptedException
     {
         Map<String,Integer> sortedMap = sortValue(sortMap);
         int counter=0;

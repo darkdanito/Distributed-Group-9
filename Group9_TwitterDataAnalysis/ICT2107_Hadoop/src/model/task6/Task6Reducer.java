@@ -12,14 +12,14 @@ import org.apache.hadoop.mapreduce.Reducer;
  * 																								*
  * Date: 01 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Reducer class for Task 6.  														*
  ************************************************************************************************/
 public class Task6Reducer extends Reducer<Text, Text, Text, Text> {
 
 	int totalcount = 0;
 	
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
+	 * Description: Reducer method for Task 6  														*
 	 * 																								*
 	 ************************************************************************************************/
 	@Override
@@ -32,7 +32,11 @@ public class Task6Reducer extends Reducer<Text, Text, Text, Text> {
 		String stringCount;
 		
 		/************************************************************************************************
-		 * Description: XXXXX  																			*
+		 * Description: This for loop will loop though the values that was taken in for the input,		*
+		 * 				to split the string to validate if the value is equal to "one". If it is equal	*
+		 * 				to "one", the value of part[1] is check to see if it contains any word of		*
+		 * 				delayed or #SFO. if it contains such words it means that the tweet is about 	*
+		 * 				delayed and thus a counter is added.											*
 		 * 																								*
 		 ************************************************************************************************/
 		for(Text t: values)

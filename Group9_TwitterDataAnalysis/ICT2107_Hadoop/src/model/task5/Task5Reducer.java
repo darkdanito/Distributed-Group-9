@@ -12,12 +12,12 @@ import org.apache.hadoop.mapreduce.Reducer;
  * 																								*
  * Date: 01 April 2016  																		*
  * 																								*
- * Description: Reducer class for Task 5.  																			*
+ * Description: Reducer class for Task 5.  														*
  ************************************************************************************************/
 public class Task5Reducer extends Reducer<Text, Text, Text, Text> {
 	
 	/************************************************************************************************
-	 * Description: Reducer method for Task 5  																			*
+	 * Description: Reducer method for Task 5  														*
 	 * 																								*
 	 ************************************************************************************************/
 	@Override
@@ -47,12 +47,12 @@ public class Task5Reducer extends Reducer<Text, Text, Text, Text> {
 		}
 		
 		/************************************************************************************************
-		 * Description: Sorting method for the ArrayList above. As in order to calculate median,
-		 * 				the values in the ArrayList have to be sorted first. Once the ArrayList is
+		 * Description: Sorting method for the ArrayList above. As in order to calculate median,		*
+		 * 				the values in the ArrayList have to be sorted first. Once the ArrayList is		*
 		 * 				sorted, it will be check to see if the the ArrayList size when modulus will		*
 		 * 				return 0 or 1. If the return value is 1, it will need to take the "middle two"	*
 		 * 				value and add them together and divide by 2 in order to get the median.			*
-		 * 				Else, the median can be obtain by the value in the middle of ArrayList			*																			*
+		 * 				Else, the median can be obtain by the value in the middle of ArrayList			*
 		 * 																								*
 		 ************************************************************************************************/
 		if(inputArray.size() != 0)
@@ -75,7 +75,5 @@ public class Task5Reducer extends Reducer<Text, Text, Text, Text> {
 			
 			context.write(key, new Text(countStr));
 		}
-		
-
 	}
 }
