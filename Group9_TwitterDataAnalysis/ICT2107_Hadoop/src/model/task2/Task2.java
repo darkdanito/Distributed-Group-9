@@ -19,7 +19,14 @@ import model.ITask;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: Task2.java is the main, where configuration is set up. 
+ * 1)Input and output path is being set up at the HDFS location.
+ * 2) A cache file is added for faster access to the tsv file which contains all the country names and codes.*
+ * 3) Since Task 2 has 2 mappers, which are Task2ValidationMapper and Task2Mapper, a ChainMapper is needed to combine both
+ * as a single mapper class.
+ * 4) job.setOutputKeyClass(Text.class); because set the country name as text
+ * 5) job.setOutputValueClass(IntWritable.class); because set the total count value as IntWritable
+ * 6) isDone = job.waitForCompletion(true) ? true : false; because submit the job to the cluster and wait for it to finish.
  ************************************************************************************************/
 public class Task2 implements ITask{
 
