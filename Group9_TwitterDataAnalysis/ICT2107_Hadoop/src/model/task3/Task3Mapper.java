@@ -15,15 +15,17 @@ import org.apache.hadoop.mapreduce.Mapper;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: This class contains the algorithm to filter out the data that is needed. The	*
+ *				values are mapped with a key and is send over to the reducer class for 			*
+ *				processing.																		*
  ************************************************************************************************/
 public class Task3Mapper extends Mapper<LongWritable, Text,Text,IntWritable> {
 	
 	Hashtable<String, String> countryCodes = new Hashtable<>();
 	
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
-	 * 																								*
+	 * Description: For this class, a buffered reader is needed to extract out the country names 	*
+	 * 				by the country code.																*
 	 ************************************************************************************************/
 	@Override
 	protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, IntWritable>.Context context)
@@ -34,8 +36,8 @@ public class Task3Mapper extends Mapper<LongWritable, Text,Text,IntWritable> {
 		String line = null;
 		
 		/************************************************************************************************
-		 * Description: XXXXX  																			*
-		 * 																								*
+		 * Description: The loop below loops through the ISO files to read the country code and name,	*
+		 * 				to parts[0] and parts[1] respectively.											*
 		 ************************************************************************************************/
 		while (true) {
 			
@@ -60,8 +62,9 @@ public class Task3Mapper extends Mapper<LongWritable, Text,Text,IntWritable> {
 		String reasons = parts[15];
 	
 		/************************************************************************************************
-		 * Description: XXXXX  																			*
-		 * 																								*
+		 * Description:  The if condition below checks if the country code is null or empty,checks if   *
+		 * 				 the reason is equals to "badflight" or "CSProblem". If it fulfills the 		*
+		 * 				 conditions, then it will be mapped and sent to the reducer class.				*
 		 ************************************************************************************************/
 		if(countryCode!= null && !countryCode.equals("") && (reasons.equals("badflight") || reasons.equals("CSProblem"))) {
 			

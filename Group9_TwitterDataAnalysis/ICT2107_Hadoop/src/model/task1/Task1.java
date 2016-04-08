@@ -19,7 +19,9 @@ import model.ITask;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: This is the file to set the path for input and output destination for the       *
+ *	            reading of the data set. The chainmapper is also declared here for the mapper   *
+ * 				class and the validatemapper class                                              *
  ************************************************************************************************/
 public class Task1 implements ITask{
 	
@@ -48,6 +50,8 @@ public class Task1 implements ITask{
 			
 			Job job = Job.getInstance(conf, "Task1");
 			job.setJarByClass(Task1.class);
+			
+			
 			
 			Path inPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/input");
 			Path outPath = new Path("hdfs://localhost:9000/user/phamvanvung/group9_hadoop/output/task1");

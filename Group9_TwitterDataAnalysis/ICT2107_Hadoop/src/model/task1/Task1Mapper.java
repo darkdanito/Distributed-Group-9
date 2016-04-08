@@ -12,13 +12,15 @@ import org.apache.hadoop.mapreduce.Mapper;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: This class contains the algorithm to filter out the data that is needed. The	*
+ *				values are mapped with a key and is send over to the reducer class for 			*
+ *				processing.																		*
  ************************************************************************************************/
 public class Task1Mapper extends Mapper<LongWritable, Text,Text,IntWritable> {
 	
 	/************************************************************************************************
-	 * Description: XXXXX  																			*
-	 * 																								*
+	 * Description: Parts[14] refers to the airline_sentiment columns and Parts[15] refers to the   *
+	 * 			    negative reason.																*
 	 ************************************************************************************************/
 	@Override
 	protected void map(LongWritable key, Text value, Mapper<LongWritable, Text, Text, IntWritable>.Context context)
@@ -30,8 +32,8 @@ public class Task1Mapper extends Mapper<LongWritable, Text,Text,IntWritable> {
 		String sentiment = parts[14];
 		
 		/************************************************************************************************
-		 * Description: XXXXX  																			*
-		 * 																								*
+		 * Description: The algorithm below extracts out the sentiments that are 'negative' in	the		*
+		 * 				data set. It also ensures that reasons are not null.							*
 		 ************************************************************************************************/
 		if (reasons != null && sentiment != null) {
 

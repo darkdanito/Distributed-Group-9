@@ -18,7 +18,9 @@ import model.ITask;
  * 																								*
  * Date: 03 April 2016  																		*
  * 																								*
- * Description: XXXXX  																			*
+ * Description: This is the file to set the path for input and output destination for the       *
+ *	            reading of the data set. The chainmapper is also declared here for the mapper   *
+ * 				class and the validatemapper class.                                              *
  ************************************************************************************************/
 public class Task3 implements ITask{
 
